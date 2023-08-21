@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public abstract class User {
+public abstract class LocalUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
