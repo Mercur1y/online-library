@@ -20,6 +20,6 @@ public class Estimate {
     private String cons;
 
     @ManyToOne
-    @JoinColumn
-    private Book books;
+    @JoinColumn(name = "book_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Book book;
 }

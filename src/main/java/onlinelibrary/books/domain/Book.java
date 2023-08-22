@@ -42,6 +42,8 @@ public class Book {
 
     private Double price;
 
+    private Double rate;
+
     @OneToMany(mappedBy = "book")
     private List<Estimate> estimates;
 
