@@ -1,9 +1,9 @@
 package onlinelibrary.config;
 
-import org.hibernate.ejb.HibernatePersistence;
+import jakarta.annotation.Resource;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -24,7 +24,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -33,14 +32,14 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @EntityScan("onlinelibrary.books.domain")
-@EnableJpaRepositories("onlinelibrary.books.repo")
+@EnableJpaRepositories("onlinelibrary")
 @PropertySource("classpath:application.properties")
 public class WebAppConfig implements WebMvcConfigurer {
 
     private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
-    private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
-    private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
-    private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
+    private static final String PROPERTY_NAME_DATABASE_PASSWORD = "spring.datasource.password";
+    private static final String PROPERTY_NAME_DATABASE_URL = "spring.datasource.url";
+    private static final String PROPERTY_NAME_DATABASE_USERNAME = "spring.datasource.username";
     private static final String PROPERTY_NAME_HIBERNATE_DIALECT = "hibernate.dialect";
     private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
     private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "entitymanager.packages.to.scan";
@@ -80,7 +79,7 @@ public class WebAppConfig implements WebMvcConfigurer {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());
-        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistence.class);
+        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty(PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN));
 
         entityManagerFactoryBean.setJpaProperties(hibProperties());
@@ -110,7 +109,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 
         InternalResourceViewResolver pagesResolver = new InternalResourceViewResolver();
         pagesResolver.setPrefix("/WEB-INF/");
-        pagesResolver.setSuffix(".jsp");
+        pagesResolver.setSuffix(".html");
         pagesResolver.setViewClass(JstlView.class);
         resolvers.add(pagesResolver);
 

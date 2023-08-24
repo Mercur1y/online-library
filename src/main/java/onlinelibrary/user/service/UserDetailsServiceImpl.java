@@ -1,5 +1,6 @@
 package onlinelibrary.user.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import onlinelibrary.user.domain.User;
 import onlinelibrary.user.repo.UserRepository;
@@ -8,16 +9,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsServiceImpl implements UserDetailsService {
-    private final UserRepository dao;
+public class UserDetailsServiceImpl implements UserDetailsService {
+    private final UserRepository userRepository;
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = dao.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
         return UserDetailsImpl.build(user);
