@@ -6,10 +6,7 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class Customer extends LocalUser {
-
-    @Column(unique = true, nullable = false)
-    private String email;
+public class Customer extends User {
 
     private String name;
     private String lastName;

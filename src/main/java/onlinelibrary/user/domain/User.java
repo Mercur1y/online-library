@@ -5,9 +5,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Getter @Setter
-public abstract class LocalUser {
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,5 +23,12 @@ public abstract class LocalUser {
     @Column(nullable = false, unique = true)
     private String username;
 
-    private String role;
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(  name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 }

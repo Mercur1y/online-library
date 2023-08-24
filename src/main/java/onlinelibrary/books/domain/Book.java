@@ -10,8 +10,7 @@ import onlinelibrary.cart.domain.CartItem;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
 @EqualsAndHashCode(of = "id")
 public class Book {
 
@@ -22,6 +21,7 @@ public class Book {
     @Lob
     @Column (updatable = false)
     private byte[] content;
+    private String name;
     private Integer pageCount;
     private String description;
     private byte[] image;
