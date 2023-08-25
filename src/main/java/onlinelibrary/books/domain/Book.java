@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import onlinelibrary.cart.domain.CartItem;
+import onlinelibrary.cart.domain.ListItem;
+import org.hibernate.annotations.Type;
 
 import java.util.List;
 
@@ -19,22 +21,23 @@ public class Book {
     private Long id;
 
     @Lob
-    @Column (updatable = false)
+    @Column (columnDefinition = "bytea")
     private byte[] content;
     private String name;
     private Integer pageCount;
     private String description;
+    @Column (columnDefinition = "bytea")
     private byte[] image;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Genre genre;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Author author;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Publisher publisher;
 
@@ -50,4 +53,9 @@ public class Book {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
     private List<CartItem> cartItems;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "book")
+    private ListItem listItem;
+
 }
