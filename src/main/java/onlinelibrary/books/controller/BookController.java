@@ -3,6 +3,7 @@ package onlinelibrary.books.controller;
 import lombok.RequiredArgsConstructor;
 import onlinelibrary.books.domain.Book;
 import onlinelibrary.books.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +40,10 @@ public class BookController {
     @ResponseBody
     public List<Book> allBooks() {
         return bookService.getAll();
+    }
+
+    @Autowired
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
     }
 }
