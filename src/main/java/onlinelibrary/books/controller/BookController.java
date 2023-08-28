@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/book")
+@RequestMapping(value = "api/v1/book")
 @RequiredArgsConstructor
 public class BookController {
     private BookService bookService;

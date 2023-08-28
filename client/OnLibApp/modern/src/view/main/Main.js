@@ -10,52 +10,76 @@ Ext.define('OnLibApp.view.main.Main', {
     xtype: 'app-main',
 
     requires: [
+        'Ext.plugin.Viewport',
         'Ext.MessageBox',
 
         'OnLibApp.view.main.MainController',
         'OnLibApp.view.main.MainModel',
-        'OnLibApp.view.main.List'
+        'OnLibApp.view.book.BookList'
     ],
 
     controller: 'main',
-    viewModel: 'main',
 
-    defaults: {
-        tab: {
-            iconAlign: 'top'
+    ui: 'navigation',
+
+    tabBarHeaderPosition: 1,
+    titleRotation: 0,
+    tabRotation: 0,
+
+    header: {
+        layout: {
+            align: 'stretchmax'
         },
-        styleHtmlContent: true
+        title: {
+            bind: {
+                text: '{name}'
+            },
+            flex: 0
+        },
+        iconCls: 'fa-th-list'
     },
 
-    tabBarPosition: 'bottom',
+    tabBar: {
+        flex: 1,
+        layout: {
+            align: 'stretch',
+            overflowHandler: 'none'
+        }
+    },
 
-    items: [
-        {
-            title: 'Home',
-            iconCls: 'x-fa fa-home',
-            layout: 'fit',
-            // The following grid shares a store with the classic version's grid as well!
-            items: [{
-                xtype: 'mainlist'
-            }]
-        },{
-            title: 'Users',
-            iconCls: 'x-fa fa-user',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Groups',
-            iconCls: 'x-fa fa-users',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Settings',
-            iconCls: 'x-fa fa-cog',
-            bind: {
-                html: '{loremIpsum}'
+    responsiveConfig: {
+        tall: {
+            headerPosition: 'top'
+        },
+        wide: {
+            headerPosition: 'left'
+        }
+    },
+
+    defaults: {
+        bodyPadding: 20,
+        tabConfig: {
+            plugins: 'responsive',
+            responsiveConfig: {
+                wide: {
+                    iconAlign: 'left',
+                    textAlign: 'left'
+                },
+                tall: {
+                    iconAlign: 'top',
+                    textAlign: 'center',
+                    width: 120
+                }
             }
         }
-    ]
+    },
+
+    items: [ {
+        title: 'Book Grid',
+        iconCls: 'fa-users',
+        items: [{
+            xtype: 'bookList',
+            reference: 'bookGrid'
+        }]
+    }]
 });

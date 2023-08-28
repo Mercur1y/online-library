@@ -9,7 +9,7 @@ Ext.define('OnLibApp.Application', {
     name: 'OnLibApp',
 
     stores: [
-        // TODO: add global / shared stores here
+        'OnLibApp.store.BookStore'
     ],
     
     launch: function () {

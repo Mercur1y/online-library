@@ -1,112 +1,26 @@
-Ext.require(['Ext.data.*', 'Ext.grid.*']);
+/*
+ * This file is generated and updated by Sencha Cmd. You can edit this file as
+ * needed for your application, but these edits will have to be merged by
+ * Sencha Cmd when upgrading.
+ */
+Ext.application({
+    name: 'OnLibApp',
 
-Ext.define('Book', {
-    extend: 'Ext.data.Model',
-    fields: [{
-        name: 'id',
-        type: 'long',
-        useNull: true
-    }, 'name', 'author', 'price'],
-    validations: [{
-        type: 'length',
-        field: 'name',
-        min: 1
-    }, {
-        type: 'length',
-        field: 'price',
-        min: 1
-    }]
-});
+    extend: 'OnLibApp.Application',
 
-Ext.onReady(function() {
+    requires: [
+        'OnLibApp.*'
+    ],
 
-    var store = Ext.create('Ext.data.Store', {
-        autoLoad: true,
-        autoSync: true,
-        model: 'Book',
-        proxy: {
-            type: 'rest',
-            url: 'book',
-            format: 'json',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            reader: {
-                type: 'json',
-                root: 'data'
-            },
-            writer: {
-                type: 'json'
-            },
-            api: {
-                create: 'book/create/',
-                read: '',
-                update: 'book/edit/',
-                destroy: 'book/delete/'
-            }
-        }
-    });
+    // The name of the initial view to create. With the classic toolkit this class
+    // will gain a "viewport" plugin if it does not extend Ext.Viewport. With the
+    // modern toolkit, the main view will be added to the Viewport.
+    //
+    mainView: 'OnLibApp.view.main.Main'
 
-    var rowEditing = Ext.create('Ext.grid.plugin.RowEditing');
-
-    var grid = Ext.create('Ext.grid.Panel', {
-        renderTo: document.body,
-        plugins: [rowEditing],
-        width: 400,
-        height: 300,
-        frame: true,
-        title: 'Books',
-        store: store,
-        columns: [{
-            text: 'ID',
-            width: 40,
-            sortable: true,
-            dataIndex: 'id'
-        }, {
-            text: 'Name',
-            flex: 1,
-            sortable: true,
-            dataIndex: 'name',
-            field: {
-                xtype: 'textfield'
-            }
-        }, {
-                text: 'Author',
-                flex: 1,
-                sortable: true,
-                dataIndex: 'author',
-                field: {
-                    xtype: 'textfield'
-                }
-            },{
-            header: 'Price',
-            width: 80,
-            sortable: true,
-            dataIndex: 'price',
-            field: {
-                xtype: 'textfield'
-            }
-        }],
-        dockedItems: [{
-            xtype: 'toolbar',
-            items: [{
-                text: 'Add',
-                iconCls: 'icon-add',
-                handler: function() {
-                    // empty record
-                    store.insert(0, new Product());
-                    rowEditing.startEdit(0, 0);
-                }
-            }, '-', {
-                text: 'Delete',
-                iconCls: 'icon-delete',
-                handler: function() {
-                    var selection = grid.getView().getSelectionModel().getSelection()[0];
-                    if (selection) {
-                        store.remove(selection);
-                    }
-                }
-            }]
-        }]
-    });
+    //-------------------------------------------------------------------------
+    // Most customizations should be made to OnLibApp.Application. If you need to
+    // customize this file, doing so below this section reduces the likelihood
+    // of merge conflicts when upgrading to new versions of Sencha Cmd.
+    //-------------------------------------------------------------------------
 });
