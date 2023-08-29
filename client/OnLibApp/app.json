@@ -3,7 +3,7 @@
      * The application's namespace.
      */
     "name": "OnLibApp",
-    
+
     /**
      * The version of the application.
      */
@@ -41,10 +41,10 @@
      * The Sencha Framework for this application: "ext" or "touch".
      */
     "framework": "ext",
-    
-    
-    
-    
+
+    "toolkit": "classic",
+
+
     /**
      * The list of required packages (with optional versions; default is "latest").
      *
@@ -55,7 +55,8 @@
      *      ]
      */
     "requires": [
-        "font-awesome"
+        "font-awesome",
+        "ux"
     ],
 
     /**
@@ -98,7 +99,7 @@
          *      }
          *
          */
-         
+
 
         /**
          * Comma-separated list of files or folders containing extra Sass. These
@@ -220,7 +221,7 @@
         }
     ],
 
-    
+
     /**
      * Settings specific to classic toolkit builds.
      */
@@ -322,13 +323,13 @@
             "type": "yui"
         }
     },
-    
+
     /**
      * Settings specific to testing builds.
      */
     "testing": {
     },
-    
+
     /**
      * Settings specific to development builds.
      */
@@ -367,9 +368,9 @@
      */
     "bootstrap": {
         "base": "${app.dir}",
-        
+
         "manifest": "${build.id}.json",
-        
+
         "microloader": "bootstrap.js",
         "css": "bootstrap.css"
     },
@@ -414,7 +415,7 @@
      *      }
      *
      */
-    
+
     "output": {
         "base": "${workspace.build.dir}/${build.environment}/${app.name}",
         "page": "index.html",
@@ -428,8 +429,8 @@
             "shared": "resources"
         }
     },
-    
-    
+
+
     /**
     * Controls for localStorage caching
     *   "cache": {
@@ -445,12 +446,12 @@
     *       "deltas": "deltas"
     *   }
     */
-    
+
     "cache": {
         "enable": false,
         "deltas": "${build.id}/deltas"
     },
-    
+
 
     /**
      * Used to automatically generate cache.manifest (HTML 5 application cache manifest)
@@ -497,9 +498,9 @@
      * generated inside this directory must be kept intact for proper generation of
      * deltas between updates.
      */
-    
+
     "archivePath": "archive/${build.id}",
-    
+
 
 
 
@@ -523,13 +524,13 @@
      *     }
      *
      */
-    
+
     "builds": {
         "classic": {
             "toolkit": "classic",
-            
+
             "theme": "theme-triton",
-            
+
             "sass": {
                 "generated": {
                     "var": "classic/sass/save.scss",
@@ -540,9 +541,9 @@
 
         "modern": {
             "toolkit": "modern",
-            
+
             "theme": "theme-triton",
-            
+
             "sass": {
                 "generated": {
                     "var": "modern/sass/save.scss",
@@ -551,8 +552,8 @@
             }
         }
     },
-    
-    
+
+
     /**
      * File / directory name patttern to ignore when copying to the builds. Must be a
      * valid regular expression.

@@ -17,6 +17,12 @@ Ext.define('OnLibApp.store.BookStore', {
                     type: 'json'
                 },
             url: '/api/v1/book',
+            api: {
+                create: '/api/v1/book/create',
+                read: '/api/v1/book',
+                update: '/api/v1/book/edit',
+                destroy: '/api/v1/book/delete'
+            },
             writer: {
                 type: 'json',
                 dateFormat: 'd/m/Y',

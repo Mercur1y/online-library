@@ -9,7 +9,6 @@ Ext.define('OnLibApp.Application', {
     name: 'OnLibApp',
 
     stores: [
-        'OnLibApp.store.BookStore'
     ],
     
     launch: function () {

@@ -15,7 +15,6 @@ Ext.define('OnLibApp.view.main.Main', {
 
         'OnLibApp.view.main.MainController',
         'OnLibApp.view.main.MainModel',
-        'OnlibApp.view.book.BookList',
         'OnLibApp.view.main.List'
     ],
 
@@ -93,7 +92,7 @@ Ext.define('OnLibApp.view.main.Main', {
         title: 'Book Grid',
         iconCls: 'fa-users',
         items: [{
-            xtype: 'bookList',
+            xtype: 'bookGrid',
             reference: 'bookGrid'
         }]
     }, {

@@ -17,7 +17,7 @@ public class ListItem {
     private Long customerId;
     private Date createdDate;
 
-    @OneToOne(optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(insertable = false, updatable = false)
     private Book book;
 }

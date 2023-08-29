@@ -7,8 +7,10 @@ import lombok.Getter;
 import lombok.Setter;
 import onlinelibrary.cart.domain.CartItem;
 import onlinelibrary.cart.domain.ListItem;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
 
+import java.sql.Types;
 import java.util.List;
 
 @Entity
@@ -20,7 +22,6 @@ public class Book {
     @Id
     private Long id;
 
-    @Lob
     @Column (columnDefinition = "bytea")
     private byte[] content;
     private String name;
@@ -47,11 +48,12 @@ public class Book {
 
     private Double rate;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "book")
     private List<Estimate> estimates;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+    @OneToMany(mappedBy = "book")
     private List<CartItem> cartItems;
 
     @JsonIgnore
