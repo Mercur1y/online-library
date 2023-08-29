@@ -2,10 +2,11 @@ Ext.define('OnlibApp.view.book.BookGridView', {
     extend: 'Ext.grid.Panel',
     xtype: 'bookGrid',
 
-    title: 'Book List',
+    title: 'Book Grid',
 
-    store: {
-        type: 'book'
+    store: {},
+    bind: {
+      store: {type: 'book'}
     },
 
     frame: true,
