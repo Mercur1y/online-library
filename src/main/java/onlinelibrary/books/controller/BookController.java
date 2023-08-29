@@ -1,6 +1,5 @@
 package onlinelibrary.books.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import onlinelibrary.books.domain.Book;
@@ -20,13 +19,13 @@ public class BookController {
     private BookService bookService;
     private final ObjectMapper objectMapper;
 
-    @RequestMapping(value = "create/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "create/", method = RequestMethod.POST)
     @ResponseBody
     public Book createBook(@RequestBody Book book) {
         return bookService.create(book);
     }
 
-    @RequestMapping(value = "edit/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Book editBook(@PathVariable long id,
                          @RequestBody Map<String, Object> content) {
@@ -34,13 +33,13 @@ public class BookController {
         return bookService.update(book);
     }
 
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public void deleteBook(@PathVariable long id) {
         bookService.delete(id);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public List<Book> allBooks() {
         return bookService.getAll();

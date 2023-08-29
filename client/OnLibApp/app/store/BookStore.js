@@ -8,7 +8,7 @@ Ext.define('OnLibApp.store.BookStore', {
     proxy:
         {
             headers: {
-                'Content-type': 'application/json'
+                'Accept': 'application/json'
             },
             type: 'rest',
             reader:

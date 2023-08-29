@@ -3,7 +3,6 @@ package onlinelibrary.books.service;
 import onlinelibrary.books.domain.Book;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BookService {
     Book create(Book book);
