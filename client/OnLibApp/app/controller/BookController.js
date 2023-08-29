@@ -19,29 +19,6 @@ Ext.define('OnLibApp.controller.BookController', {
             ref: 'addBookFormSave'}
     ],
 
-    init: function () {
-        this.control({
-            'bookGridView button[action=add]': {
-                click: this.onAddBook
-            },
-            'bookGridView button[action=delete]': {
-                click: this.onDelBook
-            },
-            'addBookFormView button[action=save]': {
-                click: this.onSaveBook
-            },
-            'addBookFormView textfield[name=name]': {
-                change: this.onValidation
-            },
-            'addBookFormView textfield[name=price]': {
-                change: this.onValidation
-            },
-            'bookGridView': {
-                cellclick: this.onLineGrid
-            }
-        });
-    },
-
     onAddBook: function () {
         Ext.widget('addBookFormView');
     },

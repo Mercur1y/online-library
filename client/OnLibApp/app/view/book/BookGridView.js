@@ -53,7 +53,8 @@ Ext.define('OnlibApp.view.book.BookGridView', {
                 {
                     text: 'Добавить',
                     action: 'add',
-                    iconCls: 'icon-add'
+                    iconCls: 'icon-add',
+                    listeners: {click:'onAddBook'}
                 },
                 '-',
                 {
@@ -64,5 +65,5 @@ Ext.define('OnlibApp.view.book.BookGridView', {
                 }
             ]
         }
-    ]
+    ],
 });
