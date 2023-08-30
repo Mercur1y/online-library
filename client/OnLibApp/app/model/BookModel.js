@@ -1,7 +1,7 @@
 Ext.define('OnLibApp.model.BookModel', {
     extend: 'Ext.data.Model',
     fields: [
-        { name: 'id', type: 'int', persist: false},
+        { name: 'id', type: 'int'},
         { name: 'name', type: 'string' },
         { name: 'price', type: 'float' }
     ],
@@ -22,7 +22,8 @@ Ext.define('OnLibApp.model.BookModel', {
             writer: {
                 type: 'json',
                 dateFormat: 'd/m/Y',
-                writeAllFields: true
+                writeAllFields: true,
+                writeRecordId: false
             }
         }
 });
