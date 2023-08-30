@@ -5,7 +5,6 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
     autoShow: true,
     layout: 'fit',
     modal: true,
-    init: function () {'onValidation'},
     items: [
         {
             bodyPadding: 10,
@@ -25,11 +24,20 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
                     name: 'price',
                     id: 'addPriceField',
                     fieldLabel: 'Цена',
-                    regex: /^([0-9]{1,20})*$/,
+                    regex: /^-?[0-9]+([.,][0-9]+)?$/,
                     regexText: 'Цена должна состоять из цифр',
                     allowBlank: false,
                     blankText: 'Это поле должно быть заполнено',
                     listeners: {change: 'onValidation'}
+                },
+                {
+                    xtype: 'combobox',
+                    fieldLabel: 'Жанр',
+                    queryMode: 'local',
+                    store: 'OnLibApp.store.GenreStore',
+                    valueField:'id',
+                    displayField:'title',
+                    renderTo: Ext.getBody()
                 }
             ]
         }

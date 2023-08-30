@@ -15,12 +15,13 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+    @Enumerated(EnumType.STRING)
+    private GenreEnum type;
+    private String title;
 
-    private String name;
-
-    @OneToMany(mappedBy = "genre", fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="book_genre",
+            joinColumns=  @JoinColumn(name="genre_id", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name="book_id", referencedColumnName="id"))
     private List<Book> books;
-
-    @Override
-    public String toString() {return name;}
 }

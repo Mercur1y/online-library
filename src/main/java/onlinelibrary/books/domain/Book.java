@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import onlinelibrary.cart.domain.CartItem;
 import onlinelibrary.cart.domain.ListItem;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 
-import java.sql.Types;
 import java.util.List;
 
 @Entity
@@ -30,9 +27,11 @@ public class Book {
     @Column (columnDefinition = "bytea")
     private byte[] image;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Genre genre;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="book_genre",
+            joinColumns=  @JoinColumn(name="book_id", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name="genre_id", referencedColumnName="id"))
+    private List<Genre> genres;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
