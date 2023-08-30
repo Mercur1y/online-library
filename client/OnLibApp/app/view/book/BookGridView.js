@@ -45,6 +45,11 @@ Ext.define('OnlibApp.view.book.BookGridView', {
         flex: 1,
         dataIndex: 'price',
         editor: {allowBlank: false}
+    }, {
+        text: "Genre",
+        flex: 1,
+        dataIndex: 'genres',
+        editor: {allowBlank: false}
     }
     ],
     dockedItems: [

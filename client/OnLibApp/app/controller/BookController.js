@@ -11,11 +11,11 @@ Ext.define('OnLibApp.controller.BookController', {
         var bookModel = Ext.create('OnLibApp.model.BookModel');
         bookModel.set(this.getView().down('form').getValues());
         bookModel.save({
-            success: function (operation, response) {
+            success: function () {
                 Ext.StoreManager.lookup('bookstoreid').load();
                 me.getView().close();
             },
-            failure: function (dummy, result) {
+            failure: function () {
                 Ext.MessageBox.show({
                     title: 'Дубликат!',
                     msg: 'Такая модель и цена уже существуют',
@@ -45,5 +45,10 @@ Ext.define('OnLibApp.controller.BookController', {
         } else {
             Ext.getCmp('addSaveBtn').disable();
         }
+    },
+
+    getGenres: function () {
+        debugger;
+        return 1
     }
 });

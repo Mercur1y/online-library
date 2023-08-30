@@ -31,13 +31,15 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
                     listeners: {change: 'onValidation'}
                 },
                 {
-                    xtype: 'combobox',
+                    xtype: 'tagfield',
                     fieldLabel: 'Жанр',
+                    id: 'genreIds',
                     queryMode: 'local',
-                    store: 'OnLibApp.store.GenreStore',
+                    bind: {store: {type: 'genre'}},
                     valueField:'id',
                     displayField:'title',
-                    renderTo: Ext.getBody()
+                    renderTo: Ext.getBody(),
+                    multiSelect: true
                 }
             ]
         }

@@ -18,4 +18,10 @@ public class GenreServiceImpl implements GenreService {
     public List<Genre> getAll() {
         return genreRepository.findAll();
     }
+
+    @Override
+    public List<Genre> getAllById(List<Long> ids) {
+        return genreRepository.findAllById(ids);
+    }
+
 }
