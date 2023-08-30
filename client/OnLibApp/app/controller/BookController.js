@@ -3,7 +3,7 @@ Ext.define('OnLibApp.controller.BookController', {
     alias: 'controller.book-list',
 
     refs: [
-        {selector: 'BookList',
+        {selector: 'bookGrid',
             ref: 'bookGridView'},
         {selector: 'bookGridView button[action="add"]',
             ref: 'bookGridAdd'},
@@ -26,12 +26,11 @@ Ext.define('OnLibApp.controller.BookController', {
     onSaveBook: function (button) {
         var me = this;
         var bookModel = Ext.create('OnLibApp.model.BookModel');
-        bookModel.set(this.getAddBookFormView().down('form').getValues());
+        bookModel.set(this.getView().down('form').getValues());
         bookModel.save({
             success: function (operation, response) {
-                var objAjax = operation.data;
-                Ext.getStore('BookStore').add(objAjax);
-                me.getAddBookFormView().close();
+                Ext.StoreManager.lookup('bookstoreid').load();
+                me.getView().close();
             },
             failure: function (dummy, result) {
                 Ext.MessageBox.show({
@@ -46,22 +45,22 @@ Ext.define('OnLibApp.controller.BookController', {
     },
 
     onDelBook: function () {
-        var sm = this.getBookGridView().getSelectionModel();
-        var rs = sm.getSelection();
-        this.getBookGridView().store.remove(rs[0]);
-        this.getBookGridView().store.commitChanges();
-        this.getBookGridDelete().disable();
+        var view = this.getView();
+        var sel = view.getSelection();
+        view.store.remove(sel);
+        view.store.commitChanges();
+        Ext.getCmp('delBookBtn').disable();
     },
 
     onLineGrid: function () {
-        this.getBookGridDelete().enable();
+        Ext.getCmp('delBookBtn').enable();
     },
 
     onValidation: function () {
-        if (this.getAddBookFormName().validate() && this.getAddBookFormPrice().validate()) {
-            this.getAddBookFormSave().enable();
+        if (Ext.getCmp('addNameField').validate() && Ext.getCmp('addPriceField').validate()) {
+            Ext.getCmp('addSaveBtn').enable();
         } else {
-            this.getAddBookFormSave().disable();
+            Ext.getCmp('addSaveBtn').disable();
         }
     }
 });

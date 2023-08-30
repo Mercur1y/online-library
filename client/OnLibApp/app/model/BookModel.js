@@ -1,6 +1,7 @@
 Ext.define('OnLibApp.model.BookModel', {
     extend: 'Ext.data.Model',
     fields: [
+        { name: 'id', type: 'int', persist: false},
         { name: 'name', type: 'string' },
         { name: 'price', type: 'float' }
     ],

@@ -1,5 +1,6 @@
 Ext.define('OnlibApp.view.book.BookGridView', {
     extend: 'Ext.grid.Panel',
+    alias: 'widget.bookgrid',
     xtype: 'bookGrid',
 
     title: 'Book Grid',
@@ -61,9 +62,12 @@ Ext.define('OnlibApp.view.book.BookGridView', {
                     action: 'delete',
                     text: 'Удалить',
                     iconCls: 'icon-delete',
-                    disabled: true
+                    disabled: true,
+                    id: 'delBookBtn',
+                    listeners: {click:'onDelBook'}
                 }
             ]
         }
     ],
+    listeners: {cellclick: 'onLineGrid'}
 });

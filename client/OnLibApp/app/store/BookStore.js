@@ -1,6 +1,6 @@
 Ext.define('OnLibApp.store.BookStore', {
     extend: 'Ext.data.Store',
-
+    storeId: 'bookstoreid',
     alias: 'store.book',
     model: 'OnLibApp.model.BookModel',
     autoLoad: true,

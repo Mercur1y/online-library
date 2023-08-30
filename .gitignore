@@ -32,6 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 /client/OnLibApp/ext/
+client/OnLibApp/sass/example/bootstrap.json
+client/OnLibApp/sass/example/bootstrap.jsonp
 
 client/apps/FssArmApp/classic.json
 client/apps/FssArmApp/classic.jsonp
