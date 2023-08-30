@@ -2,23 +2,6 @@ Ext.define('OnLibApp.controller.BookController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.book-list',
 
-    refs: [
-        {selector: 'bookGrid',
-            ref: 'bookGridView'},
-        {selector: 'bookGridView button[action="add"]',
-            ref: 'bookGridAdd'},
-        {selector: 'bookGridView button[action="delete"]',
-            ref: 'bookGridDelete'},
-        {selector: 'addBookFormView',
-            ref: 'addBookFormView'},
-        {selector: 'addBookFormView textfield[name=name] ',
-            ref: 'addBookFormName'},
-        {selector: 'addBookFormView textfield[name=price]',
-            ref: 'addBookFormPrice'},
-        {selector: 'addBookFormView button[action=save]',
-            ref: 'addBookFormSave'}
-    ],
-
     onAddBook: function () {
         Ext.widget('addBookFormView');
     },
