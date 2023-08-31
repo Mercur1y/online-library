@@ -18,8 +18,7 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
                     allowBlank: false,
                     blankText: 'Это поле должно быть заполнено',
                     listeners: {change: 'onValidation'}
-                },
-                {
+                }, {
                     xtype: 'textfield',
                     name: 'price',
                     id: 'addPriceField',
@@ -29,17 +28,42 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
                     allowBlank: false,
                     blankText: 'Это поле должно быть заполнено',
                     listeners: {change: 'onValidation'}
-                },
-                {
+                }, {
                     xtype: 'tagfield',
                     fieldLabel: 'Жанр',
                     id: 'genreIds',
                     queryMode: 'local',
                     bind: {store: {type: 'genre'}},
-                    valueField:'id',
-                    displayField:'title',
+                    valueField: 'id',
+                    displayField: 'title',
                     renderTo: Ext.getBody(),
                     multiSelect: true
+                }, {
+                    layout: 'column',
+                    items: [{
+                        id: 'authorId',
+                        xtype: 'combobox',
+                        fieldLabel: 'Автор',
+                        anyMatch: true,
+                        allowBlank: true,
+                        editable : true,
+                        typeAhead: true,
+                        transform: 'stateSelect',
+                        forceSelection: true,
+                        queryMode: 'local',
+                        displayField: 'fio',
+                        valueField: 'id',
+                        selectOnFocus: true,
+                        triggerAction: 'all',
+                        bind: {store: {type: 'author'}}
+                    }, {
+                        xtype: 'button',
+                        iconCls: 'x-fa fa-solid fa-plus',
+                        handler: function () {
+                            Ext.widget('addAuthorFormView');
+                        }
+                    }
+                    ]
                 }
             ]
         }

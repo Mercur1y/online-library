@@ -1,5 +1,7 @@
 package onlinelibrary.books.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,6 +19,7 @@ public class Author {
     private String fio;
     private String description;
 
+    @JsonBackReference("bookReference")
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Book> books;
 

@@ -3,12 +3,15 @@ package onlinelibrary.books.service.Impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import onlinelibrary.books.domain.Book;
+import onlinelibrary.books.repo.AuthorRepository;
 import onlinelibrary.books.repo.BookRepository;
 import onlinelibrary.books.service.BookService;
+import onlinelibrary.books.service.GenreService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -16,9 +19,14 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
+    private final GenreService genreService;
 
     @Override
-    public Book create(Book book) {
+    public Book create(Book book, List<Integer> ids, Long authorId) {
+        List<Long> idsLong = ids.stream().map(Integer::longValue).collect(Collectors.toList());
+        book.setGenres(genreService.getAllById(idsLong));
+        book.setAuthor(authorRepository.findById(authorId).get());
         return bookRepository.save(book);
     }
 

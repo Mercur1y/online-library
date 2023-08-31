@@ -51,8 +51,13 @@ Ext.define('OnlibApp.view.book.BookGridView', {
         flex: 1,
         dataIndex: 'genres',
         renderer: function (v) {return v.map(function(item) {return item.title}).join(', ');}
-    }
-    ],
+    }, {
+        text: "Author",
+        id: 'author',
+        flex: 1,
+        dataIndex: 'author',
+        renderer: function (item) {return item.fio}
+    }],
     dockedItems: [
         {
             xtype: 'toolbar',

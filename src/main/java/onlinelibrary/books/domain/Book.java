@@ -1,6 +1,8 @@
 package onlinelibrary.books.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,7 +38,8 @@ public class Book {
             inverseJoinColumns= @JoinColumn(name="genre_id", referencedColumnName="id"))
     private Set<Genre> genres = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonManagedReference("bookReference")
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private Author author;
 
