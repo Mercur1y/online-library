@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-@EqualsAndHashCode(of = "id")
 public class Author {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

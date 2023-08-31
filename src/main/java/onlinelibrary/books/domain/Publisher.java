@@ -8,9 +8,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@EqualsAndHashCode(of = "id")
+@Getter @Setter
 public class Publisher {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

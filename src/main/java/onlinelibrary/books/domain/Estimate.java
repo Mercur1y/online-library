@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
-@EqualsAndHashCode(of = "id")
+@Getter @Setter
 public class Estimate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

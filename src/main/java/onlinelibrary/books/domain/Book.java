@@ -2,17 +2,17 @@ package onlinelibrary.books.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import onlinelibrary.cart.domain.CartItem;
 import onlinelibrary.cart.domain.ListItem;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter @Setter
-@EqualsAndHashCode(of = "id")
 public class Book {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +27,14 @@ public class Book {
     @Column (columnDefinition = "bytea")
     private byte[] image;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(name="book_genre",
             joinColumns=  @JoinColumn(name="book_id", referencedColumnName="id"),
             inverseJoinColumns= @JoinColumn(name="genre_id", referencedColumnName="id"))
-    private List<Genre> genres;
+    private Set<Genre> genres = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn

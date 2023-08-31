@@ -2,15 +2,14 @@ package onlinelibrary.books.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter @Setter
-@EqualsAndHashCode(of = "id")
 public class Genre {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +21,6 @@ public class Genre {
     private String title;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="book_genre",
-            joinColumns=  @JoinColumn(name="genre_id", referencedColumnName="id"),
-            inverseJoinColumns= @JoinColumn(name="book_id", referencedColumnName="id"))
-    private List<Book> books;
+    @ManyToMany(mappedBy = "genres", targetEntity = Book.class)
+    private Set<Book> books = new HashSet<>();
 }

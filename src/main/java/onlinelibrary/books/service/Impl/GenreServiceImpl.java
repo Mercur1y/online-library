@@ -7,6 +7,7 @@ import onlinelibrary.books.service.GenreService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<Genre> getAllById(List<Long> ids) {
+    public Set<Genre> getAllById(List<Long> ids) {
         return genreRepository.findAllById(ids);
     }
 
