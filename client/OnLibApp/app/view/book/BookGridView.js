@@ -47,9 +47,10 @@ Ext.define('OnlibApp.view.book.BookGridView', {
         editor: {allowBlank: false}
     }, {
         text: "Genre",
+        id:'genres',
         flex: 1,
         dataIndex: 'genres',
-        editor: {allowBlank: false}
+        renderer: function (v) {return v.map(function(item) {return item.title}).join(', ');}
     }
     ],
     dockedItems: [
@@ -74,5 +75,5 @@ Ext.define('OnlibApp.view.book.BookGridView', {
             ]
         }
     ],
-    listeners: {cellclick: 'onLineGrid'}
+    listeners: {cellclick: 'onLineGrid'},
 });

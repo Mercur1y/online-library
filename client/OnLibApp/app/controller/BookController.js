@@ -46,9 +46,4 @@ Ext.define('OnLibApp.controller.BookController', {
             Ext.getCmp('addSaveBtn').disable();
         }
     },
-
-    getGenres: function () {
-        debugger;
-        return 1
-    }
 });
