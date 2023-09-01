@@ -76,18 +76,11 @@ Ext.define('OnLibApp.view.main.Main', {
     },
 
     items: [{
-        title: 'Home',
-        iconCls: 'fa-home',
-        // The following grid shares a store with the classic version's grid as well!
+        title: 'Book Read',
+        iconCls: 'fa-users',
         items: [{
-            xtype: 'mainlist'
+            xtype: 'bookRead'
         }]
-    }, {
-        title: 'Users',
-        iconCls: 'fa-user',
-        bind: {
-            html: '{loremIpsum}'
-        }
     }, {
         title: 'Book Grid',
         iconCls: 'fa-users',

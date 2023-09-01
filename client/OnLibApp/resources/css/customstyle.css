@@ -1,0 +1,53 @@
+#flipbook {
+    margin: 0 auto !important;
+    box-shadow: 0 3px 15px #4d4c4c;
+}
+
+#flipbook .turn-page {
+    background-color: white;
+}
+
+#flipbook .cover {
+    background: #333;
+}
+
+#flipbook .cover h1 {
+    color: white;
+    text-align: center;
+    font-size: 50px;
+    line-height: 500px;
+    margin: 0px;
+}
+
+#flipbook .loader {
+    /* background-image: url(loader.gif); */
+    width: 24px;
+    height: 24px;
+    display: block;
+    position: absolute;
+    top: 238px;
+    left: 188px;
+}
+
+#flipbook .data {
+    text-align: center;
+    font-size: 40px;
+    color: #999;
+    line-height: 500px;
+}
+
+#flipbook .odd {
+    background-image: -webkit-linear-gradient(left, #FFF 95%, #ddd 100%);
+    background-image: -moz-linear-gradient(left, #FFF 95%, #ddd 100%);
+    background-image: -o-linear-gradient(left, #FFF 95%, #ddd 100%);
+    background-image: -ms-linear-gradient(left, #FFF 95%, #ddd 100%);
+    box-shadow: 0 3px 15px #4d4c4c;
+}
+
+#flipbook .even {
+    background-image: -webkit-linear-gradient(right, #FFF 95%, #ddd 100%);
+    background-image: -moz-linear-gradient(right, #FFF 95%, #ddd 100%);
+    background-image: -o-linear-gradient(right, #FFF 95%, #ddd 100%);
+    background-image: -ms-linear-gradient(right, #FFF 95%, #ddd 100%);
+    box-shadow: 0 3px 15px #4d4c4c;
+}
