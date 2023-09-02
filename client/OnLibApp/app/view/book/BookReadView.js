@@ -1,48 +1,69 @@
 Ext.define('OnlibApp.view.book.BookReadView', {
     extend: 'Ext.Panel',
+    id: 'bookreadpanel',
     alias: 'widget.bookread',
     xtype: 'bookRead',
     layout: 'card',
-    html: '<div id="flipbook" style=" width:1400px; height:900px;margin-left: 20%;background-color: #fff;"></div></div>',
+    html: '<div style="width: 1440px;height:900px;margin: 0 auto;text-align: center;background-color: \n' +
+        ' #fff;">\n' +
+        ' <div id="flipbook" style="margin-left: 20%;background-color: #fff;"></div>\n' +
+        '</div>',
     listeners: {
-        afterrender: function () {getpdf("/content/AmpirV-Viktor_Pielievin.pdf")}
-    }
+        afterrender: function () {
+            getpdf("/content/AmpirV-Viktor_Pielievin.pdf");
+        }
+    },
+    dockedItems: [{
+        id: 'pageslider',
+        dock: 'bottom',
+        xtype: 'slider',
+        width: 214,
+        hideLabel: true,
+        minValue: 0,
+        maxValue: 100
+    }]
 });
 
-var flipbook=Ext.get('flipbook');
-var pagestr = 1,bid= 1, scale = 1, rotate = 90;
+$(document).ready(function(){
+    var w=$("#flipbook").outerWidth();
+    $("#pageslider").css({"width":w});
+});
 
-function getpdf(url){
-    var loadingTask=pdfjsLib.getDocument(url)//Get pdf file information
+var pagestr = 1, bid = 1, scale = 1, rotate = 90;
+
+function getpdf(url) {
+    var loadingTask = pdfjsLib.getDocument(url)//Get pdf file information
     loadingTask.promise
-        .then(function(pdf){
+        .then(function (pdf) {
             //Add fixed div s and canvas based on the total number of pages
-            for (let i = 1; i <= pdf.numPages;i++) {
+            for (var i = 1; i <= pdf.numPages; i++) {
                 var id = 'canvaspage' + i;
-                debugger;
-                Ext.DomHelper.append(flipbook, '<canvas id="' + id + '" class="page"></canvas>');
-                setcanvas(i,pdf,id)
+                var div = document.createElement('div');
+                div.innerHTML = '<canvas id="' + id + '" class="page"></canvas>';
+                Ext.get('flipbook').appendChild(div);
+                setcanvas(i, pdf, id)
             }
 
             //Call turn
             yepnope({
-                test : Modernizr.csstransforms,
+                test: Modernizr.csstransforms,
                 yep: ['./lib/turnjs4/lib/turn.js'],
+                nope: ['./lib/turnjs4/lib/turn.html4.min.js'],
                 complete: loadApp
             })
         })
 }
 
-function setcanvas(i,pdf,id){
-    pdf.getPage(i).then(function(page) {
-        var viewport = page.getViewport({scale:scale})
+function setcanvas(i, pdf, id) {
+    pdf.getPage(i).then(function (page) {
+        var viewport = page.getViewport({scale: scale})
         var canvas = document.getElementById(id)
         var context = canvas.getContext('2d')
 
         if (viewport.height / viewport.width >= 1.42) {
 
             var newScale = 1440 / viewport.height
-            var newViewport = page.getViewport({scale:newScale,rotation:rotate})
+            var newViewport = page.getViewport({scale: newScale, rotation: rotate})
             var outputScale = window.devicePixelRatio
 
             canvas.width = Math.floor(newViewport.width * outputScale);
@@ -60,12 +81,12 @@ function setcanvas(i,pdf,id){
             }
             page.render(renderContext)
 
-            return ;
+            return;
         }
 
         var newScale = 900 / viewport.height
 
-        var newViewport = page.getViewport({scale:newScale})
+        var newViewport = page.getViewport({scale: newScale})
         var outputScale = window.devicePixelRatio
 
         canvas.width = Math.floor(newViewport.width * outputScale);
@@ -84,14 +105,13 @@ function setcanvas(i,pdf,id){
         page.render(renderContext)
     })
 }
+
 function loadApp() {
     $("#flipbook").turn({
-        width:1400,
-        height:900,
+        width: 1270,
+        height: 900,
         elevation: 50,
-        display: 'single',
         autoCenter: true,
-        duration:1000,
-        gradients:true,
+        duration: 1000,
     })
 }
