@@ -46,7 +46,7 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
                         fieldLabel: 'Автор',
                         anyMatch: true,
                         allowBlank: true,
-                        editable : true,
+                        editable: true,
                         typeAhead: true,
                         transform: 'stateSelect',
                         forceSelection: true,
@@ -62,10 +62,18 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
                         handler: function () {
                             Ext.widget('addAuthorFormView');
                         }
-                    }
-                    ]
-                }
-            ]
+                    }]
+                }, {
+                    layout: 'column',
+                    items: [{
+                        xtype: 'filefield',
+                        name: 'file',
+                        id: 'uploadcontentfield',
+                        fieldLabel: 'Выберите файл: ',
+                        msgTarget: 'side',
+                        allowBlank: false,
+                    }]
+                }]
         }
     ],
 

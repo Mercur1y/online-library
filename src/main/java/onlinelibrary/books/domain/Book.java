@@ -1,13 +1,12 @@
 package onlinelibrary.books.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import onlinelibrary.cart.domain.CartItem;
 import onlinelibrary.cart.domain.ListItem;
+import onlinelibrary.common.domain.FileInfo;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,15 +14,16 @@ import java.util.Set;
 
 @Entity
 @Getter @Setter
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Book {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-
-    @Column (columnDefinition = "bytea")
-    private byte[] content;
     private String name;
+    private String suuid;
     private Integer pageCount;
     private String description;
     @Column (columnDefinition = "bytea")
@@ -38,8 +38,8 @@ public class Book {
             inverseJoinColumns= @JoinColumn(name="genre_id", referencedColumnName="id"))
     private Set<Genre> genres = new HashSet<>();
 
-    @JsonManagedReference("bookReference")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Author author;
 
@@ -62,7 +62,11 @@ public class Book {
     private List<CartItem> cartItems;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "book")
+    @OneToOne(mappedBy = "book", fetch = FetchType.LAZY)
     private ListItem listItem;
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "book", fetch = FetchType.LAZY)
+    private FileInfo file;
 
 }

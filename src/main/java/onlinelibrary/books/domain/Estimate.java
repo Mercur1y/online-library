@@ -17,7 +17,7 @@ public class Estimate {
     private String pros;
     private String cons;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Book book;
 }

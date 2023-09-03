@@ -75,18 +75,18 @@ Ext.define('OnLibApp.view.main.Main', {
         }
     },
 
-    items: [{
-        title: 'Book Read',
-        iconCls: 'fa-users',
-        items: [{
-            xtype: 'bookRead'
-        }]
-    }, {
+    items: [ {
         title: 'Book Grid',
         iconCls: 'fa-users',
         items: [{
             xtype: 'bookGrid',
             reference: 'bookGrid'
+        }]
+    },{
+        title: 'Book Read',
+        iconCls: 'fa-users',
+        items: [{
+            xtype: 'bookRead'
         }]
     }, {
         title: 'Settings',
