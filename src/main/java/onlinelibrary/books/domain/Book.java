@@ -1,6 +1,7 @@
 package onlinelibrary.books.domain;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,9 +15,6 @@ import java.util.Set;
 
 @Entity
 @Getter @Setter
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Book {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,9 +36,8 @@ public class Book {
             inverseJoinColumns= @JoinColumn(name="genre_id", referencedColumnName="id"))
     private Set<Genre> genres = new HashSet<>();
 
-    @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "author_id")
     private Author author;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -66,7 +63,7 @@ public class Book {
     private ListItem listItem;
 
     @JsonManagedReference
-    @OneToOne(mappedBy = "book", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private FileInfo file;
 
 }

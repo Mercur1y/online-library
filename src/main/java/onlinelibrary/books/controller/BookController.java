@@ -6,6 +6,7 @@ import onlinelibrary.books.domain.Book;
 import onlinelibrary.books.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Book> allBooks() {
+    public Mono<List<Book>> allBooks() {
         return bookService.getAll();
     }
 

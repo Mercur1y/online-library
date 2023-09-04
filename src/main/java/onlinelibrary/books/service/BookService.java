@@ -1,6 +1,7 @@
 package onlinelibrary.books.service;
 
 import onlinelibrary.books.domain.Book;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ public interface BookService {
     Book get(long id) throws Exception;
     Book update(Book book);
     void delete(long id);
-    List<Book> getAll();
+    Mono<List<Book>> getAll();
 }

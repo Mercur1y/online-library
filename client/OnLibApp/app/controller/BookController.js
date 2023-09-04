@@ -24,8 +24,8 @@ Ext.define('OnLibApp.controller.BookController', {
                     headers: {'Content-Type':null},
                     success: function(response){ }
                 });
-                Ext.StoreManager.lookup('bookstoreid').load();
                 me.getView().close();
+                setTimeout(function() {Ext.StoreManager.lookup('bookstoreid').load();}, 800);
             },
             failure: function () {
                 Ext.MessageBox.show({

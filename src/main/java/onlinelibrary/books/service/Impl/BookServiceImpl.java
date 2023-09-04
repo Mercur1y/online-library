@@ -8,6 +8,7 @@ import onlinelibrary.books.repo.BookRepository;
 import onlinelibrary.books.service.BookService;
 import onlinelibrary.books.service.GenreService;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +57,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getAll() {
-        return bookRepository.findAll();
+    public Mono<List<Book>> getAll() {
+        return Mono.just(bookRepository.findAll());
     }
 }
