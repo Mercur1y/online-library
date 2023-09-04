@@ -63,6 +63,7 @@ public class FileService {
 
         BufferedImage bim = pdfRenderer.renderImageWithDPI(0, 300, ImageType.RGB);
         ImageIO.write(bim, "jpg", baos);
+        document.close();
         return baos.toByteArray();
     }
 
