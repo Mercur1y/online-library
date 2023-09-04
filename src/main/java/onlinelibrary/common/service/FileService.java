@@ -31,11 +31,15 @@ public class FileService {
 
     public void connectInfoToBook(MultipartFile content, String UUID) {
         byte[] bytesOfImage;
+        int pageCount;
 
         try {
             File file = new File(SAVE_PATH + content.getOriginalFilename());
+            PDDocument document = PDDocument.load(file);
             content.transferTo(file);
-            bytesOfImage = getByteArrayImage(file);
+            pageCount = document.getNumberOfPages();
+            bytesOfImage = getByteArrayImage(document);
+            document.close();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -52,18 +56,17 @@ public class FileService {
 
         Book book = bookRepository.findBySuuid(UUID);
         book.setImage(bytesOfImage);
+        book.setPageCount(pageCount);
         fileInfo.setBook(book);
         fileRepository.save(fileInfo);
     }
 
-    public static byte[] getByteArrayImage(File file) throws IOException{
-        PDDocument document = PDDocument.load(file);
+    public static byte[] getByteArrayImage(PDDocument document) throws IOException{
         PDFRenderer pdfRenderer = new PDFRenderer(document);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         BufferedImage bim = pdfRenderer.renderImageWithDPI(0, 300, ImageType.RGB);
         ImageIO.write(bim, "jpg", baos);
-        document.close();
         return baos.toByteArray();
     }
 
