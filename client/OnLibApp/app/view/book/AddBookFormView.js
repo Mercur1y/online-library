@@ -9,71 +9,89 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
         {
             bodyPadding: 10,
             xtype: 'form',
-            items: [
-                {
-                    xtype: 'textfield',
-                    name: 'name',
-                    id: 'addNameField',
-                    fieldLabel: 'Название',
-                    allowBlank: false,
-                    blankText: 'Это поле должно быть заполнено',
-                    listeners: {change: 'onValidation'}
-                }, {
-                    xtype: 'textfield',
-                    name: 'price',
-                    id: 'addPriceField',
-                    fieldLabel: 'Цена',
-                    regex: /^-?[0-9]+([.,][0-9]+)?$/,
-                    regexText: 'Цена должна состоять из цифр',
-                    allowBlank: false,
-                    blankText: 'Это поле должно быть заполнено',
-                    listeners: {change: 'onValidation'}
-                }, {
-                    xtype: 'tagfield',
-                    fieldLabel: 'Жанр',
-                    id: 'genreIds',
+            items: [{
+                xtype: 'textfield',
+                name: 'name',
+                width: 500,
+                id: 'addNameField',
+                fieldLabel: 'Название',
+                allowBlank: false,
+                blankText: 'Это поле должно быть заполнено',
+                listeners: {change: 'onValidation'}
+            }, {
+                xtype: 'textarea',
+                name: 'description',
+                width: 500,
+                fieldLabel: 'Описание',
+                blankText: 'Это поле должно быть заполнено',
+                allowBlank: false
+            }, {
+                xtype: 'textfield',
+                name: 'price',
+                width: 500,
+                id: 'addPriceField',
+                fieldLabel: 'Цена',
+                regex: /^-?[0-9]+([.,][0-9]+)?$/,
+                regexText: 'Цена должна состоять из цифр',
+                allowBlank: false,
+                blankText: 'Это поле должно быть заполнено',
+                listeners: {change: 'onValidation'}
+            }, {
+                xtype: 'tagfield',
+                fieldLabel: 'Жанр',
+                id: 'genreIds',
+                width: 500,
+                queryMode: 'local',
+                bind: {store: {type: 'genre'}},
+                valueField: 'id',
+                displayField: 'title',
+                renderTo: Ext.getBody(),
+                multiSelect: true
+            }, {
+                layout: 'column',
+                items: [{
+                    id: 'authorId',
+                    width: 468,
+                    xtype: 'combobox',
+                    fieldLabel: 'Автор',
+                    anyMatch: true,
+                    allowBlank: true,
+                    editable: true,
+                    typeAhead: true,
+                    transform: 'stateSelect',
+                    forceSelection: true,
                     queryMode: 'local',
-                    bind: {store: {type: 'genre'}},
+                    displayField: 'fio',
                     valueField: 'id',
-                    displayField: 'title',
-                    renderTo: Ext.getBody(),
-                    multiSelect: true
+                    selectOnFocus: true,
+                    triggerAction: 'all',
+                    bind: {store: {type: 'author'}}
                 }, {
-                    layout: 'column',
-                    items: [{
-                        id: 'authorId',
-                        xtype: 'combobox',
-                        fieldLabel: 'Автор',
-                        anyMatch: true,
-                        allowBlank: true,
-                        editable: true,
-                        typeAhead: true,
-                        transform: 'stateSelect',
-                        forceSelection: true,
-                        queryMode: 'local',
-                        displayField: 'fio',
-                        valueField: 'id',
-                        selectOnFocus: true,
-                        triggerAction: 'all',
-                        bind: {store: {type: 'author'}}
-                    }, {
-                        xtype: 'button',
-                        iconCls: 'x-fa fa-solid fa-plus',
-                        handler: function () {
-                            Ext.widget('addAuthorFormView');
-                        }
-                    }]
-                }, {
-                    layout: 'column',
-                    items: [{
-                        xtype: 'filefield',
-                        name: 'file',
-                        id: 'uploadcontentfield',
-                        fieldLabel: 'Выберите файл: ',
-                        msgTarget: 'side',
-                        allowBlank: false,
-                    }]
+                    xtype: 'button',
+                    iconCls: 'x-fa fa-solid fa-plus',
+                    handler: function () {
+                        Ext.widget('addAuthorFormView');
+                    }
                 }]
+            }, {
+                layout: 'column',
+                items: [{
+                    xtype: 'filefield',
+                    name: 'file',
+                    width: 500,
+                    id: 'uploadcontentfield',
+                    fieldLabel: 'Выберите файл: ',
+                    buttonText: 'Выбрать...',
+                    msgTarget: 'side',
+                    allowBlank: false,
+                    listeners: {
+                        change: function (fld, value) {
+                            var newValue = value.replace(/C:\\fakepath\\/g, '');
+                            fld.setRawValue(newValue);
+                        }
+                    }
+                }]
+            }]
         }
     ],
 

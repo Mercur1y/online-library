@@ -83,12 +83,6 @@ Ext.define('OnLibApp.view.main.Main', {
             reference: 'bookGrid'
         }]
     },{
-        title: 'Book Read',
-        iconCls: 'fa-users',
-        items: [{
-            xtype: 'bookRead'
-        }]
-    }, {
         title: 'Settings',
         iconCls: 'fa-cog',
         bind: {

@@ -1,32 +1,31 @@
 Ext.define('OnlibApp.view.book.BookReadView', {
-    extend: 'Ext.Panel',
+    extend: 'Ext.window.Window',
     id: 'bookreadpanel',
-    alias: 'widget.bookread',
-    xtype: 'bookRead',
-    layout: 'card',
-    html: '<div style="width: 1440px;height:900px;margin: 0 auto;text-align: center;background-color: \n' +
-        ' #fff;">\n' +
-        ' <div id="flipbook" style="margin-left: 20%;background-color: #fff;"></div>\n' +
-        '</div>',
-    listeners: {
-        afterrender: function () {
-            getpdf("/content/AmpirV-Viktor_Pielievin.pdf");
-        }
+    style: {
+        titleAlign: 'center'
     },
-    dockedItems: [{
-        id: 'pageslider',
-        dock: 'bottom',
-        xtype: 'slider',
-        width: 214,
-        hideLabel: true,
-        minValue: 0,
-        maxValue: 100
+    alias: 'widget.bookread',
+    autoShow: true,
+    closeAction: 'destroy',
+    items: [{
+        id: 'bookReadPanel',
+        xtype: 'panel',
+        layout: 'card',
+        html: '<div style="width: 1440px;height:900px;margin: 0 auto;text-align: center;background-color: \n' +
+            ' #fff;">\n' +
+            ' <div id="flipbook" style="background-color: #fff;"></div>\n' +
+            '</div>',
+        listeners: {
+            afterrender: function () {
+                getpdf("/content/" + sessionStorage.getItem("path"));
+            }
+        }
     }]
 });
 
-$(document).ready(function(){
-    var w=$("#flipbook").outerWidth();
-    $("#pageslider").css({"width":w});
+$(document).ready(function () {
+    var w = $("#flipbook").outerWidth();
+    $("#pageslider").css({"width": w});
 });
 
 var pagestr = 1, bid = 1, scale = 1, rotate = 90;

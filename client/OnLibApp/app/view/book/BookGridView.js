@@ -57,7 +57,26 @@ Ext.define('OnlibApp.view.book.BookGridView', {
         flex: 1,
         dataIndex: 'author',
         renderer: function (item) {return item.fio}
-    }],
+    }, {
+            xtype: 'widgetcolumn',
+            widget: {
+                xtype: 'button',
+                text: "Читать...",
+                defaultBindProperty: null, //important
+                listeners: {
+                    click: function (widgetColumn) {
+                        var record = widgetColumn.getWidgetRecord(),
+                            filename = record.get('file').name,
+                            author = record.get('author').fio,
+                            bookName = record.get('name');
+                        sessionStorage.setItem("path", filename);
+
+                        var bookRead = Ext.widget('bookread')
+                        bookRead.setTitle(author + ' - ' + bookName);
+                    }
+                }
+            }
+        }],
     dockedItems: [
         {
             xtype: 'toolbar',

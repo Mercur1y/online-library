@@ -1,9 +1,9 @@
 /**
  * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting causes an instance of this class to be created and
- * added to the Viewport container.
+ * "mainView" property. That setting automatically applies the "viewport"
+ * plugin causing this view to become the body element (i.e., the viewport).
  *
- * TODO - Replace the content of this view to suit the needs of your application.
+ * TODO - Replace this content of this view to suite the needs of your application.
  */
 Ext.define('OnLibApp.view.main.Main', {
     extend: 'Ext.tab.Panel',
@@ -11,14 +11,15 @@ Ext.define('OnLibApp.view.main.Main', {
 
     requires: [
         'Ext.plugin.Viewport',
-        'Ext.MessageBox',
+        'Ext.Dialog',
 
         'OnLibApp.view.main.MainController',
         'OnLibApp.view.main.MainModel',
-        'OnLibApp.view.book.BookList'
+        'OnLibApp.view.main.List'
     ],
 
     controller: 'main',
+    viewModel: 'main',
 
     ui: 'navigation',
 
@@ -78,8 +79,20 @@ Ext.define('OnLibApp.view.main.Main', {
         title: 'Book Grid',
         iconCls: 'fa-users',
         items: [{
-            xtype: 'bookList',
+            xtype: 'bookGrid',
             reference: 'bookGrid'
         }]
+    },{
+        title: 'Book Read',
+        iconCls: 'fa-users',
+        items: [{
+            xtype: 'bookRead'
+        }]
+    }, {
+        title: 'Settings',
+        iconCls: 'fa-cog',
+        bind: {
+            html: '{loremIpsum}'
+        }
     }]
 });
