@@ -35,8 +35,8 @@ public class FileService {
 
         try {
             File file = new File(SAVE_PATH + content.getOriginalFilename());
-            PDDocument document = PDDocument.load(file);
             content.transferTo(file);
+            PDDocument document = PDDocument.load(file);
             pageCount = document.getNumberOfPages();
             bytesOfImage = getByteArrayImage(document);
             document.close();
