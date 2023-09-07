@@ -15,7 +15,6 @@ Ext.define('OnLibApp.view.main.Main', {
 
         'OnLibApp.view.main.MainController',
         'OnLibApp.view.main.MainModel',
-        'OnLibApp.view.main.List'
     ],
 
     controller: 'main',
@@ -75,18 +74,11 @@ Ext.define('OnLibApp.view.main.Main', {
         }
     },
 
-    items: [ {
-        title: 'Book Grid',
-        iconCls: 'fa-users',
-        items: [{
-            xtype: 'bookGrid',
-            reference: 'bookGrid'
-        }]
-    },{
-        title: 'Settings',
+    items: [{
+        title: 'Author Grid',
         iconCls: 'fa-cog',
-        bind: {
-            html: '{loremIpsum}'
-        }
+        items: [{
+            xtype: 'rowGrid',
+        }]
     }]
 });

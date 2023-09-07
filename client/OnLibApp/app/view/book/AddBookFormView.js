@@ -76,6 +76,38 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
             }, {
                 layout: 'column',
                 items: [{
+                    id: 'publisherId',
+                    width: 468,
+                    xtype: 'combobox',
+                    fieldLabel: 'Издательство',
+                    anyMatch: true,
+                    allowBlank: true,
+                    editable: true,
+                    typeAhead: true,
+                    transform: 'stateSelect',
+                    forceSelection: true,
+                    queryMode: 'local',
+                    displayField: 'name',
+                    valueField: 'id',
+                    selectOnFocus: true,
+                    triggerAction: 'all',
+                    bind: {store: {type: 'publisher'}}
+                }, {
+                    xtype: 'button',
+                    iconCls: 'x-fa fa-solid fa-plus',
+                    handler: function () {
+                        Ext.widget('addPublisherFormView');
+                    }
+                }]
+            },{
+                name: 'publishYear',
+                width: 500,
+                format: 'Y',
+                fieldLabel: 'Год выпуска издания: ',
+                xtype: 'onlyyearpicker'
+            },{
+                layout: 'column',
+                items: [{
                     xtype: 'filefield',
                     name: 'file',
                     width: 500,

@@ -1,8 +1,6 @@
 Ext.define('OnLibApp.model.AuthorModel', {
     extend: 'Ext.data.Model',
     fields: [
-        { name: 'id', type: 'int'},
-        { name: 'fio', type: 'string' },
         { name: 'description', type: 'string' }
     ],
     proxy:

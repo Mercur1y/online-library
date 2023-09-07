@@ -13,4 +13,6 @@ import java.util.Set;
 public interface GenreRepository extends JpaRepository<Genre, Long> {
     @Query("select g from Genre g where g.id in (:ids)")
     Set<Genre> findAllById(@Param("ids") List<Long> ids);
+
+
 }

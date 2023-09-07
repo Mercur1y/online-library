@@ -21,6 +21,30 @@ Ext.define('OnLibApp.controller.AuthorController', {
             }
         });
     },
+    onLineGrid: function () {
+        Ext.getCmp('delAuthorBtn').enable();
+    },
+
+    onDelAuthor: function () {
+        var view = this.getView();
+        var sel = view.getSelection();
+        if(view.getSelection()[0].getData().books.length !== 0) {
+            Ext.Msg.confirm('Вы уверены?',
+                'У автора есть книги. Если вы удалите автора, книги удаляться',
+                function (choice) {
+                    if (choice === 'yes') {
+                        view.store.remove(sel);
+                        view.store.commitChanges();
+                        Ext.StoreManager.lookup('bookstoreid').load();
+                    } else Ext.getCmp('delAuthorBtn').enable();
+                }, this);
+        } else {
+            view.store.remove(sel);
+            view.store.commitChanges();
+        }
+        Ext.getCmp('delAuthorBtn').disable();
+    },
+
     onValidation: function () {
         if (Ext.getCmp('addFioField').validate() && Ext.getCmp('addDescField').validate()) {
             Ext.getCmp('addSaveAuthorBtn').enable();

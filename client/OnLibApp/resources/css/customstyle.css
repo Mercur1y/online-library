@@ -14,5 +14,19 @@
     box-shadow: 0 4px 10px #666;
 }
 
-#pagesliger{
+#bookReadPanel{
+    width: auto;
+    display: block;
+}
+
+#genreIds{
+    margin-bottom: 10px;
+}
+
+#authorId{
+    margin-bottom: 5px;
+}
+
+.tColBody{
+    min-height: 338px;
 }

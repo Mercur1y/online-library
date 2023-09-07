@@ -1,8 +1,9 @@
-Ext.define('OnLibApp.store.GenreStore', {
+Ext.define('OnLibApp.store.PublisherStore', {
     extend: 'Ext.data.Store',
-    storeId: 'genrestoreid',
-    alias: 'store.genre',
-    model: 'OnLibApp.model.GenreModel',
+    storeId: 'publisherstoreid',
+    alias: 'store.publisher',
+    pageSize: 5,
+    model: 'OnLibApp.model.PublisherModel',
     autoLoad: true,
     autoSync: true,
     proxy:
@@ -16,12 +17,12 @@ Ext.define('OnLibApp.store.GenreStore', {
                     rootProperty: 'data',
                     type: 'json'
                 },
-            url: '/api/v1/genre',
+            url: '/api/v1/publisher',
             api: {
-                create: '/api/v1/genre/create',
-                read: '/api/v1/genre',
-                update: '/api/v1/genre/edit',
-                destroy: '/api/v1/genre/delete'
+                create: '/api/v1/publisher/create',
+                read: '/api/v1/publisher',
+                update: '/api/v1/publisher/edit',
+                destroy: '/api/v1/publisher/delete'
             },
             writer: {
                 type: 'json',

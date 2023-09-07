@@ -1,5 +1,9 @@
 Ext.define('OnLibApp.model.BookModel', {
     extend: 'Ext.data.Model',
+    fields: [
+        { name: 'price', type: 'float' },
+        { name: 'description', type: 'string' }
+    ],
     proxy:
         {
             type: 'rest',

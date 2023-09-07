@@ -1,7 +1,7 @@
-Ext.define('OnLibApp.model.GenreModel', {
+Ext.define('OnLibApp.model.PublisherModel', {
     extend: 'Ext.data.Model',
     fields: [
-        { name: 'title', type: 'string' }
+        { name: 'name', type: 'string' }
     ],
     proxy:
         {
@@ -12,10 +12,10 @@ Ext.define('OnLibApp.model.GenreModel', {
                     type: 'json'
                 },
             api: {
-                create: '/api/v1/genre/create',
-                read: '/api/v1/genre',
-                update: '/api/v1/genre/edit',
-                destroy: '/api/v1/genre/delete'
+                create: '/api/v1/publisher/create',
+                read: '/api/v1/publisher',
+                update: '/api/v1/publisher/edit',
+                destroy: '/api/v1/publisher/delete'
             },
             writer: {
                 type: 'json',

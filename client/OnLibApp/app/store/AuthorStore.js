@@ -16,7 +16,6 @@ Ext.define('OnLibApp.store.AuthorStore', {
                     rootProperty: 'data',
                     type: 'json'
                 },
-            url: '/api/v1/author/',
             api: {
                 create: '/api/v1/author/create',
                 read: '/api/v1/author',

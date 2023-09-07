@@ -34,8 +34,7 @@ Ext.define('OnLibApp.controller.BookController', {
                     buttons: Ext.Msg.OK,
                     icon: Ext.Msg.ERROR
                 });
-            }},
-        );
+            }});
     },
 
     onDelBook: function () {

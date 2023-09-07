@@ -1,7 +1,7 @@
-Ext.define('OnLibApp.view.book.AddAuthorFormView', {
+Ext.define('OnLibApp.view.publisher.AddPublisherFormView', {
     extend: 'Ext.window.Window',
-    alias: 'widget.addAuthorFormView',
-    controller: 'author-ctrl',
+    alias: 'widget.addPublisherFormView',
+    controller: 'publisher-ctrl',
     autoShow: true,
     layout: 'fit',
     modal: true,
@@ -12,29 +12,22 @@ Ext.define('OnLibApp.view.book.AddAuthorFormView', {
             items: [
                 {
                     xtype: 'textfield',
-                    name: 'fio',
-                    id: 'addFioField',
-                    fieldLabel: 'ФИО',
+                    name: 'name',
+                    id: 'addPbNameField',
+                    fieldLabel: 'Наименование',
                     allowBlank: false,
                     blankText: 'Это поле должно быть заполнено',
-                    listeners: {change: 'onValidation'}
-                }, {
-                    xtype: 'textfield',
-                    name: 'description',
-                    id: 'addDescField',
-                    fieldLabel: 'Описание',
-                },
-                    ]
                 }
-            ],
+            ]
+        }
+    ],
 
     buttons: [
         {
             text: 'Сохранить',
             action: 'save',
-            id: 'addSaveAuthorBtn',
-            disabled: true,
-            listeners: {click: 'onSaveAuthor'}
+            id: 'addSavePbBtn',
+            listeners: {click: 'onSavePublisher'}
         },
         {
             text: 'Отменить',

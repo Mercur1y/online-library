@@ -2,12 +2,15 @@ package onlinelibrary.books.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import onlinelibrary.books.domain.Author;
 import onlinelibrary.books.domain.Book;
 import onlinelibrary.books.service.BookService;
+import onlinelibrary.common.service.UtilService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +21,8 @@ public class BookController {
     private BookService bookService;
     private final ObjectMapper objectMapper;
 
+    private final UtilService utilService;
+
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public Book createBook(@RequestBody Map<String, Object> content) {
         Book book = objectMapper.convertValue(content, Book.class);
@@ -27,10 +32,9 @@ public class BookController {
     }
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.PUT)
-    public Book editBook(@PathVariable long id,
-                         @RequestBody Map<String, Object> content) {
-        Book book = objectMapper.convertValue(content, Book.class);
-        return bookService.update(book);
+    public void editBook(@PathVariable long id,
+                         @RequestBody Book book) {
+        bookService.update(book);
     }
 
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
@@ -39,8 +43,15 @@ public class BookController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public Mono<List<Book>> allBooks() {
-        return bookService.getAll();
+    public Map<String, Object> allBooks(@RequestParam(value = "page", required = false) Integer page,
+                                        @RequestParam(value = "limit", required = false) Integer limit) {
+        Map<String, Object> response = new HashMap<>();
+
+        if (page != null && limit != null) {
+            response.put("total", utilService.countRows(Book.class));
+            response.put("data", bookService.getAllByPage(PageRequest.of(page - 1, limit)).getContent());
+        } else response.put("data", bookService.getAll());
+        return response;
     }
 
     @Autowired
