@@ -27,24 +27,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf()
-                .disable()
-                .authorizeHttpRequests()
-                .requestMatchers(
-                        "/**",
-                        "/swagger-ui.html"
-                )
-                .permitAll()
+                .csrf().disable()
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth ->
+                        auth.requestMatchers("/api/v1/auth/**").permitAll()
+                                .anyRequest().authenticated());
 
-                .requestMatchers("/**").hasAnyRole(UserRoles.Fields.ADMIN, UserRoles.Fields.CUSTOMER)
-
-                .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authenticationProvider(authenticationProvider)
+                http.authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
                 .logoutUrl("/logout")
