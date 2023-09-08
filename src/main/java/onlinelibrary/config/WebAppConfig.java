@@ -2,6 +2,7 @@ package onlinelibrary.config;
 
 import lombok.RequiredArgsConstructor;
 import onlinelibrary.user.repo.UserRepository;
+import onlinelibrary.user.service.UserDetailsServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,16 +20,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebAppConfig {
     private final UserRepository repository;
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> repository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
