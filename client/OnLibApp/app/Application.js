@@ -23,5 +23,7 @@ Ext.define('OnLibApp.Application', {
                 }
             }
         );
-    }
+    },
+
+    defaultToken : 'books'
 });
