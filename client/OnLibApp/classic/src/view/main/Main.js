@@ -19,7 +19,7 @@ Ext.define('OnLibApp.view.main.Main', {
 
     controller: 'main',
     viewModel: 'main',
-
+    plugins: 'viewport',
     ui: 'navigation',
 
     tabBarHeaderPosition: 1,

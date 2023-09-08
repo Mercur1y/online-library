@@ -10,7 +10,4 @@ public class Customer extends User {
 
     private String name;
     private String lastName;
-
-    @Column(nullable = false)
-    private int active;
 }

@@ -8,11 +8,15 @@ Ext.define('OnLibApp.Application', {
     
     name: 'OnLibApp',
 
+    required: ['OnLibApp.security.Firewall'],
+
     stores: [
     ],
     
     launch: function () {
-        // TODO - Launch the application
+        Ext.create({
+            xtype: OnLibApp.security.Firewall.isLoggedIn() ? 'app-main' : 'login'
+        });
     },
 
     onAppUpdate: function () {
