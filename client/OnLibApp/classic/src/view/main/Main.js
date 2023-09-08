@@ -74,11 +74,30 @@ Ext.define('OnLibApp.view.main.Main', {
         }
     },
 
-    items: [{
-        title: 'Author Grid',
-        iconCls: 'fa-cog',
-        items: [{
-            xtype: 'rowGrid',
-        }]
-    }]
+    listeners: {
+        tabchange: 'onTabChange'
+    },
+
+    items: [
+        {
+            title: 'Books',
+            iconCls: 'fa-book',
+            id: 'books',
+            items: [
+                {
+                    xtype: 'bookGrid'
+                }
+            ]
+        },
+        {
+            title: 'Authors',
+            iconCls: 'fa-cog',
+            id: 'authors',
+            items: [
+                {
+                    xtype: 'authorgrid'
+                }
+            ]
+        }
+    ]
 });

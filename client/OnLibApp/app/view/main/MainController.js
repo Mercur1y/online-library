@@ -17,5 +17,30 @@ Ext.define('OnLibApp.view.main.MainController', {
         if (choice === 'yes') {
             //
         }
+    },
+
+    routes : {
+        'books' : 'onBooks',
+        'authors': 'onAuthors'
+    },
+
+    onBooks: function () {
+        this.onRouteChange('books')
+    },
+
+    onAuthors: function () {
+        this.onRouteChange('authors')
+    },
+
+    onRouteChange: function (route) {
+        this.getView().setActiveItem(route);
+    },
+
+    onTabChange: function (panel, newTab) {
+        this.changeTab(newTab.id);
+    },
+
+    changeTab: function (id) {
+        this.redirectTo(id);
     }
 });

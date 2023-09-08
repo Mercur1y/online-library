@@ -2,7 +2,7 @@ Ext.define('OnLibApp.view.main.RowGrid', {
     extend: 'Ext.panel.Panel',
     requires: [
         'OnlibApp.view.author.AuthorGridView',
-        'OnlibApp.view.genre.GenreGridView',
+        // 'OnlibApp.view.genre.GenreGridView',
     ],
     xtype: 'rowGrid',
     items: [{
@@ -22,10 +22,10 @@ Ext.define('OnLibApp.view.main.RowGrid', {
         items: [{
             cls: 'tColBody',
             xtype: 'authorGrid',
-        },{
+        },/*{
             cls: 'tColBody',
             xtype: 'genreGrid',
-        }, {
+        },*/ {
             cls: 'tColBody',
             xtype: 'publisherGrid'
         }]
