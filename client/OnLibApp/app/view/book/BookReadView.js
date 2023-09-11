@@ -1,5 +1,6 @@
 Ext.define('OnlibApp.view.book.BookReadView', {
     extend: 'Ext.window.Window',
+    requires: 'OnLibApp.security.TokenStorage',
     id: 'bookreadpanel',
     style: {
         titleAlign: 'center'
@@ -7,6 +8,11 @@ Ext.define('OnlibApp.view.book.BookReadView', {
     alias: 'widget.bookread',
     autoShow: true,
     closeAction: 'destroy',
+    listeners: {
+        close: function () {
+            sessionStorage.removeItem("path");
+        }
+    },
     items: [{
         id: 'bookReadPanel',
         xtype: 'panel',
@@ -31,7 +37,10 @@ $(document).ready(function () {
 var pagestr = 1, bid = 1, scale = 1, rotate = 90;
 
 function getpdf(url) {
-    var loadingTask = pdfjsLib.getDocument(url)//Get pdf file information
+    var loadingTask = pdfjsLib.getDocument({
+        url: url,
+        httpHeaders: {Authorization: 'Bearer ' + OnLibApp.security.TokenStorage.retrieve()},
+    })//Get pdf file information
     loadingTask.promise
         .then(function (pdf) {
             //Add fixed div s and canvas based on the total number of pages
