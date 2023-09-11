@@ -51,11 +51,25 @@ Ext.define('OnLibApp.view.main.Main', {
             xtype: 'tbfill'
 
         }, {
-            cls: 'logoutL',
-            xtype: 'fieldcontainer',
+            xtype: 'container',
+            layout: {
+                type: 'hbox',
+                align: 'center',
+                pack: 'center'
+            },
             items: [{
+                xtype: 'tbtext',
+                text: 'some',
+                style: 'font-size: 14px; font-weight: bold; color: #b9b9b9;',
+                listeners: {
+                    afterrender: function (item) {
+                        item.setText(OnLibApp.security.Firewall.getCurrentUsername());
+                    }
+                }
+            },{
                 xtype: 'button',
-                text: 'Custom button',
+                cls: 'transbtnbar',
+                text: 'Выйти',
                 setActive: function () {
                 },
                 listeners: {

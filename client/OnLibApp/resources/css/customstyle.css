@@ -39,3 +39,13 @@
     color: #035087 !important;
 }
 .transbtn:hover {background: #bdbdbd;}
+
+.transbtnbar{
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+}
+.transbtnbar span{
+    color: #b9b9b9 !important;
+}
+.transbtnbar:hover {background: #575757;}

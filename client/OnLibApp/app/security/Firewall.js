@@ -8,6 +8,10 @@ Ext.define('OnLibApp.security.Firewall', {
         return null !== OnLibApp.security.TokenStorage.retrieve();
     },
 
+    getCurrentUsername: function () {
+        return parseJwt(OnLibApp.security.TokenStorage.retrieve()).sub;
+    },
+
     login: function (username, password) {
         var deferred = new Ext.Deferred();
 
@@ -80,3 +84,11 @@ Ext.define('OnLibApp.security.Firewall', {
         }
     });
 });
+
+const parseJwt = (token) => {
+    try {
+        return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+        return null;
+    }
+};
