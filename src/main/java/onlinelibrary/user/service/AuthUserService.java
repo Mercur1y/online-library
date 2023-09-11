@@ -15,7 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -27,19 +27,19 @@ public class AuthUserService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder encoder;
+    private final BCryptPasswordEncoder encoder;
     private final UserRepository repository;
 
     public String getToken(LoginRequest loginRequest) {
         User user = repository.findByUsername(loginRequest.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("Пользователь с логином " + loginRequest.getUsername() + " не найден"));
 
-        if (!encoder.encode(loginRequest.getPassword()).equals(user.getPassword())) {
+        if (!encoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new ResourceNotFoundException("Неверный пароль");
         }
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return jwtService.generateJwtToken(authentication);
     }
