@@ -8,6 +8,7 @@
 Ext.define('OnLibApp.view.main.Main', {
     extend: 'Ext.tab.Panel',
     xtype: 'app-main',
+    layout: 'fit',
 
     requires: [
         'Ext.plugin.Viewport',
@@ -15,6 +16,7 @@ Ext.define('OnLibApp.view.main.Main', {
 
         'OnLibApp.view.main.MainController',
         'OnLibApp.view.main.MainModel',
+        'OnLibApp.security.Firewall'
     ],
 
     controller: 'main',
@@ -28,7 +30,7 @@ Ext.define('OnLibApp.view.main.Main', {
 
     header: {
         layout: {
-            align: 'stretchmax'
+            align: 'stretch'
         },
         title: {
             bind: {
@@ -36,7 +38,7 @@ Ext.define('OnLibApp.view.main.Main', {
             },
             flex: 0
         },
-        iconCls: 'fa-th-list'
+        iconCls: 'x-fas fa-graduation-cap'
     },
 
     tabBar: {
@@ -44,16 +46,33 @@ Ext.define('OnLibApp.view.main.Main', {
         layout: {
             align: 'stretch',
             overflowHandler: 'none'
-        }
+        },
+        items: [{
+            xtype: 'tbfill'
+
+        }, {
+            cls: 'logoutL',
+            xtype: 'fieldcontainer',
+            items: [{
+                xtype: 'button',
+                text: 'Custom button',
+                setActive: function () {
+                },
+                listeners: {
+                    click: function () {
+                        OnLibApp.security.Firewall.logout();
+                        this.up('app-main').destroy();
+                        Ext.create({
+                            xtype: 'login'
+                        });
+                    }
+                }
+            }]
+        }]
     },
 
     responsiveConfig: {
-        tall: {
-            headerPosition: 'top'
-        },
-        wide: {
-            headerPosition: 'left'
-        }
+        headerPosition: 'top'
     },
 
     defaults: {
@@ -61,15 +80,9 @@ Ext.define('OnLibApp.view.main.Main', {
         tabConfig: {
             plugins: 'responsive',
             responsiveConfig: {
-                wide: {
-                    iconAlign: 'left',
-                    textAlign: 'left'
-                },
-                tall: {
-                    iconAlign: 'top',
-                    textAlign: 'center',
-                    width: 120
-                }
+                iconAlign: 'top',
+                textAlign: 'center',
+                width: 120
             }
         }
     },
@@ -83,21 +96,12 @@ Ext.define('OnLibApp.view.main.Main', {
             title: 'Books',
             iconCls: 'fa-book',
             id: 'books',
-            items: [
-                {
-                    xtype: 'bookGrid'
-                }
-            ]
-        },
-        {
+            items: [{xtype: 'bookGrid'}]
+        }, {
             title: 'Authors',
-            iconCls: 'fa-cog',
+            iconCls: 'fa-user',
             id: 'authors',
-            items: [
-                {
-                    xtype: 'authorgrid'
-                }
-            ]
+            items: [{xtype: 'authorgrid'}]
         }
     ]
 });

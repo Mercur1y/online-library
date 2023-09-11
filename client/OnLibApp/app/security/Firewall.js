@@ -4,11 +4,11 @@ Ext.define('OnLibApp.security.Firewall', {
         'OnLibApp.security.TokenStorage'
     ],
 
-    isLoggedIn: function() {
+    isLoggedIn: function () {
         return null !== OnLibApp.security.TokenStorage.retrieve();
     },
 
-    login: function(username, password) {
+    login: function (username, password) {
         var deferred = new Ext.Deferred();
 
         Ext.Ajax.request({
@@ -41,13 +41,40 @@ Ext.define('OnLibApp.security.Firewall', {
         return deferred.promise;
     },
 
-    logout: function(callback) {
+    register: function (username, password, email, name, lastName) {
+        var deferred = new Ext.Deferred();
+
+        Ext.Ajax.request({
+            url: 'api/v1/auth/signup',
+            method: 'POST',
+            jsonData: {
+                'username': username,
+                'password': password,
+                'email': email,
+                'name': name,
+                'lastName': lastName
+            },
+
+            success: function (response) {
+                var data = Ext.decode(response.responseText);
+                deferred.resolve(data, response);
+            },
+
+            failure: function (response) {
+                var data = Ext.decode(response.responseText);
+                deferred.reject(data, response);
+            }
+        });
+
+        return deferred.promise;
+    },
+
+    logout: function () {
         OnLibApp.security.TokenStorage.clear();
-        callback();
     }
 }, function () {
-    Ext.Ajax.on('beforerequest', function(conn, options) {
-        if (OnLibApp.security.Firewall.isLoggedIn() ){
+    Ext.Ajax.on('beforerequest', function (conn, options) {
+        if (OnLibApp.security.Firewall.isLoggedIn()) {
             options.headers = options.headers || {};
             options.headers['Authorization'] = 'Bearer ' + OnLibApp.security.TokenStorage.retrieve();
         }

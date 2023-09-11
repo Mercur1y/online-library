@@ -30,3 +30,12 @@
 .tColBody{
     min-height: 338px;
 }
+.transbtn {
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+}
+.transbtn span{
+    color: #035087 !important;
+}
+.transbtn:hover {background: #bdbdbd;}

@@ -5,7 +5,8 @@ Ext.define('OnLibApp.view.auth.LoginView', {
     requires: ['Ext.form.Panel'],
     controller: 'login',
     bodyPadding: 10,
-    title: 'Login Window',
+    title: 'OnLib',
+    titleAlign: 'center',
     closable: false,
     autoShow: true,
 
@@ -15,17 +16,25 @@ Ext.define('OnLibApp.view.auth.LoginView', {
         items: [{
             xtype: 'textfield',
             name: 'username',
-            fieldLabel: 'Username',
-            allowBlank: false
+            fieldLabel: 'Логин',
+            allowBlank: false,
+            blankText : 'Пожалуйста, введите логин'
         }, {
             xtype: 'textfield',
             name: 'password',
             inputType: 'password',
-            fieldLabel: 'Password',
-            allowBlank: false
+            fieldLabel: 'Пароль',
+            allowBlank: false,
+            blankText : 'Пожалуйста, введите пароль'
         }],
         buttons: [{
-            text: 'Login',
+            cls: 'transbtn',
+            text: 'Регистрация',
+            listeners: {
+                click: 'onRegBtn'
+            }
+        }, {
+            text: 'Войти',
             formBind: true,
             listeners: {
                 click: 'onLogin'
