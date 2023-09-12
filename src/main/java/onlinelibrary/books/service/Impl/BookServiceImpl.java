@@ -26,10 +26,16 @@ public class BookServiceImpl implements BookService {
     private final GenreService genreService;
 
     @Override
+    @Deprecated
     public Book create(Book book, List<Integer> ids, Long authorId) {
-        List<Long> idsLong = ids.stream().map(Integer::longValue).collect(Collectors.toList());
-        book.setGenres(genreService.getAllById(idsLong));
-        book.setAuthor(authorRepository.findById(authorId).get());
+//        List<Long> idsLong = ids.stream().map(Integer::longValue).collect(Collectors.toList());
+//        book.setGenres(genreService.getAllById(idsLong));
+//        book.setAuthor(authorRepository.findById(authorId).get());
+        return repository.save(book);
+    }
+
+    @Override
+    public Book create(Book book) {
         return repository.save(book);
     }
 

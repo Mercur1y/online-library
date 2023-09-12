@@ -8,11 +8,18 @@ Ext.define('OnLibApp.controller.BookController', {
 
     onSaveBook: function (button) {
         var me = this;
-        var bookModel = Ext.create('OnLibApp.model.BookModel');
+        var vm = this.getViewModel();
+        var original = vm.get('original');
+        var genreStore = Ext.StoreManager.get('genrestoreid');
+        debugger;
+
+        vm.get('genres').forEach(function (id) {
+            original.genres().add(genreStore.getById(id));
+        })
         var uuid = this.uuidv4();
-        bookModel.set(this.getView().down('form').getValues());
-        bookModel.set('suuid', uuid);
-        bookModel.save({
+
+        original.set('suuid', uuid);
+        original.save({
             success: function () {
                 var file = me.getView().down('filefield').el.down('input[type=file]').dom.files[0],
                 data = new FormData();

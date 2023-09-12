@@ -18,9 +18,9 @@ public class Publisher {
 
     private String name;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "publisher")
-    private List<Book> books;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "publisher")
+//    private List<Book> books;
 
     @Override
     public String toString() {return name;}

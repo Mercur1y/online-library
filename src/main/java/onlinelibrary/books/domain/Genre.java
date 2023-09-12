@@ -15,12 +15,12 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    @JsonIgnore
+//    @JsonIgnore
     @Enumerated(EnumType.STRING)
     private GenreEnum type;
     private String title;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "genres", targetEntity = Book.class)
-    private Set<Book> books = new HashSet<>();
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "genres", targetEntity = Book.class)
+//    private Set<Book> books = new HashSet<>();
 }

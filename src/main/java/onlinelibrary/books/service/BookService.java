@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface BookService {
     Book create(Book book, List<Integer> ids, Long authorId);
+
+    Book create(Book book);
     Book get(long id) throws Exception;
     Book update(Book book);
     void delete(long id);

@@ -13,6 +13,8 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "api/v1/author")
 @RequiredArgsConstructor
+//todo: refactor api endpoints according to the commonly used practice. e.g. https://restfulapi.net/resource-naming/
+// see BookController.java and BookController.js
 public class AuthorController {
 
     private final AuthorService authorService;
@@ -35,6 +37,7 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
+    //TODO: use spring pagination instead
     public Map<String, Object> allAuthors(@RequestParam(value = "page", required = false) Integer page,
                                           @RequestParam(value = "limit", required = false) Integer limit) {
         Map<String, Object> response = new HashMap<>();

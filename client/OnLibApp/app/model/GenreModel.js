@@ -1,7 +1,8 @@
 Ext.define('OnLibApp.model.GenreModel', {
     extend: 'Ext.data.Model',
     fields: [
-        { name: 'title', type: 'string' }
+        { name: 'title', type: 'string' },
+        { name: 'type', type: 'string' }
     ],
     proxy:
         {

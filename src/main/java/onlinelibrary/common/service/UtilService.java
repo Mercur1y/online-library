@@ -13,6 +13,7 @@ public class UtilService {
     @PersistenceContext
     private EntityManager entityManager;
     @Transactional
+    @Deprecated
     public long countRows(Class entityClass) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
