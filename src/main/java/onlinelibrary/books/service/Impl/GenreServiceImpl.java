@@ -32,7 +32,6 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public Genre update(Genre genre) {
         Genre genreToUp = get(genre.getId());
-        genreToUp.setType(genre.getType());
         genreToUp.setTitle(genre.getTitle());
         return repository.save(genreToUp);
     }

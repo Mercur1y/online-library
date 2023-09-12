@@ -23,6 +23,7 @@ public class Book {
     private String name;
     private String suuid;
     private Integer pageCount;
+    @Column(length = 511)
     private String description;
     @Column (columnDefinition = "bytea")
     private byte[] image;

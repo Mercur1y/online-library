@@ -15,6 +15,7 @@ public class Author {
     @Id
     private Long id;
     private String fio;
+    @Column(length = 511)
     private String description;
 
 

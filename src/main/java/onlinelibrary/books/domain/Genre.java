@@ -15,9 +15,6 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    @JsonIgnore
-    @Enumerated(EnumType.STRING)
-    private GenreEnum type;
     private String title;
 
     @JsonIgnore

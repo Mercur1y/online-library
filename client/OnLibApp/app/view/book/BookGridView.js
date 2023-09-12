@@ -23,6 +23,14 @@ Ext.define('OnlibApp.view.book.BookGridView', {
     columns: [{
         text: "Id", dataIndex: 'id', hidden: false, width: 35
     }, {
+        text: 'Image',
+        dataIndex: 'image',
+        width: 100,
+        renderer: function (v) {
+            var srcBase64 = "data:image/jpeg;base64," + btoa(atob(v));
+            return '<image style="width : 50px; height : 71px;" src="' + srcBase64 + '" />'
+        }
+    }, {
         text: "Name", flex: 1, dataIndex: 'name',
     }, {
         text: "Desc", flex: 1, dataIndex: 'description', editor: {allowBlank: false}
