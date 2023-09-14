@@ -2,13 +2,13 @@ package onlinelibrary.books.controller;
 
 import lombok.RequiredArgsConstructor;
 import onlinelibrary.books.domain.Author;
+import onlinelibrary.books.dto.AuthorDto;
 import onlinelibrary.books.service.AuthorService;
-import onlinelibrary.common.service.UtilService;
+import onlinelibrary.common.payload.response.MessageResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/v1/author")
@@ -16,33 +16,32 @@ import java.util.Map;
 public class AuthorController {
 
     private final AuthorService authorService;
-    private final UtilService utilService;
 
-    @RequestMapping(value = "create", method = RequestMethod.POST)
-    public Author createAuthor(@RequestBody Author author) {
-        return authorService.create(author);
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public MessageResponse createAuthor(@RequestBody AuthorDto.Default author) {
+        authorService.create(author);
+        return new MessageResponse("Успешное добавление автора");
     }
 
-    @RequestMapping(value = "edit/{id}", method = RequestMethod.PUT)
-    public void editAuthor(@PathVariable long id,
-                             @RequestBody Author author) {
-        authorService.update(author);
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    public MessageResponse editAuthor(@PathVariable long id,
+                                      @RequestBody AuthorDto.Default author) {
+        authorService.update(author, id);
+        return new MessageResponse("Успешное изменение автора");
     }
 
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
-    public void deleteAuthor(@PathVariable long id) {
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    public MessageResponse deleteAuthor(@PathVariable long id) {
         authorService.delete(id);
+        return new MessageResponse("Автор успешно удален");
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public Map<String, Object> allAuthors(@RequestParam(value = "page", required = false) Integer page,
-                                          @RequestParam(value = "limit", required = false) Integer limit) {
-        Map<String, Object> response = new HashMap<>();
-
-        if (page != null && limit != null) {
-            response.put("total", utilService.countRows(Author.class));
-            response.put("data", authorService.getAllByPage(PageRequest.of(page - 1, limit)).getContent());
-        } else response.put("data", authorService.getAll());
-        return response;
+    public List<AuthorDto.ForAuthorGrid> allAuthors(@RequestParam(value = "page", required = false) Integer page,
+                                                    @RequestParam(value = "limit", required = false) Integer limit) {
+        if (page != null && limit != null)
+            return authorService.getAllByPage(PageRequest.of(page - 1, limit));
+        else
+            return authorService.getAll();
     }
 }

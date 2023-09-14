@@ -5,7 +5,6 @@ Ext.define('OnlibApp.view.book.BookGridView', {
 
     title: 'Book Grid',
 
-    store: {},
     bind: {
         store: {type: 'book', pageSize: 10}
     },
@@ -37,14 +36,22 @@ Ext.define('OnlibApp.view.book.BookGridView', {
     }, {
         text: "Price", flex: 1, dataIndex: 'price', editor: {allowBlank: false}
     }, {
-        text: "Genre", id: 'genres', flex: 1, dataIndex: 'genres', renderer: function (v) {
-            return v.map(function (item) {
-                return item.title
-            }).join(', ');
+        text: "Genre", id: 'genres', flex: 1, dataIndex: 'genres', renderer: function (value, meta, record) {
+            if (!record) {
+                return '';
+            }
+            return record.genres().getRange().map(function (i) {return i.get('title')}).join(', ')
         }
     }, {
-        text: "Author", id: 'author', flex: 1, dataIndex: 'author', renderer: function (item) {
-            return item.fio
+        text: "Author",
+        id: 'author',
+        flex: 1,
+        dataIndex: 'author',
+        renderer: function (item, meta, record) {
+            if (!record) {
+                return '';
+            }
+            return record.getAuthor() == null ? '' : record.getAuthor().get('fio');
         }
     }, {
         xtype: 'widgetcolumn', widget: {

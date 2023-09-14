@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import onlinelibrary.books.domain.Book;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
 
@@ -31,5 +33,6 @@ public class FileInfo {
     @JsonBackReference
     @OneToOne
     @JoinColumn
+    @Fetch(FetchMode.JOIN)
     private Book book;
 }

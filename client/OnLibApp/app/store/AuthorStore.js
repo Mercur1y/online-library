@@ -17,15 +17,20 @@ Ext.define('OnLibApp.store.AuthorStore', {
                     type: 'json'
                 },
             api: {
-                create: '/api/v1/author/create',
+                create: '/api/v1/author',
                 read: '/api/v1/author',
-                update: '/api/v1/author/edit',
-                destroy: '/api/v1/author/delete'
+                update: '/api/v1/author',
+                destroy: '/api/v1/author'
             },
             writer: {
                 type: 'json',
                 dateFormat: 'd/m/Y',
-                writeAllFields: true
+                writeAllFields: true,
+                writeRecordId: false,
+                allDataOptions: {
+                    associated: true,
+                    persist: true
+                }
             }
         }
 });

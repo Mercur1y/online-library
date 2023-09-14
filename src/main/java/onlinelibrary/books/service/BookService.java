@@ -1,18 +1,16 @@
 package onlinelibrary.books.service;
 
 import onlinelibrary.books.domain.Book;
-import onlinelibrary.books.domain.Genre;
-import org.springframework.data.domain.Page;
+import onlinelibrary.books.dto.BookDto;
 import org.springframework.data.domain.PageRequest;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 
 public interface BookService {
-    Book create(Book book, List<Integer> ids, Long authorId);
+    void create(BookDto.Request.ToCreate book);
     Book get(long id) throws Exception;
-    Book update(Book book);
+    void update(BookDto.Request.ToEdit book, Long id);
     void delete(long id);
-    Mono<List<Book>> getAll();
-    Page<Book> getAllByPage(PageRequest pr);
+    List<BookDto.Response.ForBookGrid> getAll();
+    List<BookDto.Response.ForBookGrid> getAllByPage(PageRequest pr);
 }

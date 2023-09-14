@@ -2,13 +2,13 @@ package onlinelibrary.books.controller;
 
 import lombok.RequiredArgsConstructor;
 import onlinelibrary.books.domain.Genre;
+import onlinelibrary.books.dto.GenreDto;
 import onlinelibrary.books.service.GenreService;
-import onlinelibrary.common.service.UtilService;
+import onlinelibrary.common.payload.response.MessageResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,33 +16,32 @@ import java.util.Map;
 public class GenreController {
 
     private final GenreService genreService;
-    private final UtilService utilService;
 
-    @RequestMapping(value = "create", method = RequestMethod.POST)
-    public Genre createGenre(@RequestBody Genre genre) {
-        return genreService.create(genre);
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public MessageResponse createGenre(@RequestBody GenreDto.TitleOnly genre) {
+        genreService.create(genre);
+        return new MessageResponse("Успешное добавление жанра");
     }
 
-    @RequestMapping(value = "edit/{id}", method = RequestMethod.PUT)
-    public void editGenre(@PathVariable long id,
-                             @RequestBody Genre genre) {
-        genreService.update(genre);
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    public MessageResponse editGenre(@PathVariable long id,
+                          @RequestBody GenreDto.TitleOnly genre) {
+        genreService.update(genre, id);
+        return new MessageResponse("Успешное изменение жанра");
     }
 
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
-    public void deleteGenre(@PathVariable long id) {
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    public MessageResponse deleteGenre(@PathVariable long id) {
         genreService.delete(id);
+        return new MessageResponse("Жанр успешно удален");
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public Map<String, Object> allGenre(@RequestParam(value = "page", required = false) Integer page,
-                                        @RequestParam(value = "limit", required = false) Integer limit) {
-        Map<String, Object> response = new HashMap<>();
-
-        if(page != null && limit !=null) {
-            response.put("total", utilService.countRows(Genre.class));
-            response.put("data", genreService.getAllByPage(PageRequest.of(page-1, limit)).getContent());
-        } else response.put("data", genreService.getAll());
-        return response;
+    public List<GenreDto.Default> allGenre(@RequestParam(value = "page", required = false) Integer page,
+                                @RequestParam(value = "limit", required = false) Integer limit) {
+        if (page != null && limit != null)
+            return genreService.getAllByPage(PageRequest.of(page - 1, limit));
+        else
+            return genreService.getAll();
     }
 }

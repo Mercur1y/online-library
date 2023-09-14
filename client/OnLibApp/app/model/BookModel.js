@@ -1,9 +1,17 @@
+//TODO сделать передачу только требуемых полей для всех моделей
 Ext.define('OnLibApp.model.BookModel', {
     extend: 'Ext.data.Model',
     fields: [
-        { name: 'price', type: 'float' },
-        { name: 'description', type: 'string' }
-    ],
+        {name: 'price', type: 'float'},
+        {name: 'description', type: 'string'}, {
+            name: 'author',
+            reference: 'OnLibApp.model.AuthorModel'
+        }],
+    hasMany: [{
+        model: 'OnLibApp.model.GenreModel',
+        name: 'genres',
+        associationKey: 'genres'
+    }],
     proxy:
         {
             type: 'rest',
@@ -13,16 +21,20 @@ Ext.define('OnLibApp.model.BookModel', {
                     type: 'json'
                 },
             api: {
-                create: '/api/v1/book/create',
+                create: '/api/v1/book',
                 read: '/api/v1/book',
-                update: '/api/v1/book/edit',
-                destroy: '/api/v1/book/delete'
+                update: '/api/v1/book',
+                destroy: '/api/v1/book'
             },
             writer: {
                 type: 'json',
                 dateFormat: 'd/m/Y',
                 writeAllFields: true,
-                writeRecordId: false
+                writeRecordId: false,
+                allDataOptions: {
+                    associated: true,
+                    persist: true
+                }
             }
         }
 });

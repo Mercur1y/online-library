@@ -16,8 +16,4 @@ public class Genre {
     @Id
     private Long id;
     private String title;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "genres", targetEntity = Book.class)
-    private Set<Book> books = new HashSet<>();
 }

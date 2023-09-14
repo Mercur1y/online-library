@@ -18,15 +18,19 @@ Ext.define('OnLibApp.store.GenreStore', {
                 },
             url: '/api/v1/genre',
             api: {
-                create: '/api/v1/genre/create',
+                create: '/api/v1/genre',
                 read: '/api/v1/genre',
-                update: '/api/v1/genre/edit',
-                destroy: '/api/v1/genre/delete'
+                update: '/api/v1/genre',
+                destroy: '/api/v1/genre'
             },
             writer: {
                 type: 'json',
                 dateFormat: 'd/m/Y',
-                writeAllFields: true
+                writeAllFields: true,
+                allDataOptions: {
+                    associated: true,
+                    persist: true
+                }
             }
         }
 });

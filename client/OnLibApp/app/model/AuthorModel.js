@@ -1,8 +1,5 @@
 Ext.define('OnLibApp.model.AuthorModel', {
     extend: 'Ext.data.Model',
-    fields: [
-        { name: 'description', type: 'string' }
-    ],
     proxy:
         {
             type: 'rest',
@@ -12,16 +9,20 @@ Ext.define('OnLibApp.model.AuthorModel', {
                     type: 'json'
                 },
             api: {
-                create: '/api/v1/author/create',
+                create: '/api/v1/author',
                 read: '/api/v1/author',
-                update: '/api/v1/author/edit',
-                destroy: '/api/v1/author/delete'
+                update: '/api/v1/author',
+                destroy: '/api/v1/author'
             },
             writer: {
                 type: 'json',
                 dateFormat: 'd/m/Y',
                 writeAllFields: true,
-                writeRecordId: false
+                writeRecordId: false,
+                allDataOptions: {
+                    associated: true,
+                    persist: true
+                }
             }
         }
 });

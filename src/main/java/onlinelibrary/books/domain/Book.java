@@ -1,13 +1,12 @@
 package onlinelibrary.books.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import onlinelibrary.cart.domain.CartItem;
-import onlinelibrary.cart.domain.ListItem;
 import onlinelibrary.common.domain.FileInfo;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.util.HashSet;
 import java.util.List;
@@ -28,10 +27,7 @@ public class Book {
     @Column (columnDefinition = "bytea")
     private byte[] image;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="book_genre",
             joinColumns=  @JoinColumn(name="book_id", referencedColumnName="id"),
             inverseJoinColumns= @JoinColumn(name="genre_id", referencedColumnName="id"))
@@ -51,20 +47,12 @@ public class Book {
 
     private Double rate;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "book")
+    @OneToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.TRUE)
     private List<Estimate> estimates;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "book")
-    private List<CartItem> cartItems;
-
-    @JsonIgnore
-    @OneToOne(mappedBy = "book", fetch = FetchType.LAZY)
-    private ListItem listItem;
-
     @JsonManagedReference
-    @OneToOne(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "book", fetch = FetchType.LAZY)
     private FileInfo file;
 
 }

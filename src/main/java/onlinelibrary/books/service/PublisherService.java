@@ -1,17 +1,16 @@
 package onlinelibrary.books.service;
 
-import onlinelibrary.books.domain.Genre;
 import onlinelibrary.books.domain.Publisher;
-import org.springframework.data.domain.Page;
+import onlinelibrary.books.dto.PublisherDto;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
 public interface PublisherService {
-    Publisher create(Publisher publisher);
+    void create(PublisherDto.NameOnly publisher);
     Publisher get(long id) throws Exception;
-    Publisher update(Publisher publisher);
+    void update(PublisherDto.NameOnly publisher, Long id);
     void delete(long id);
-    List<Publisher> getAll();
-    Page<Publisher> getAllByPage(PageRequest pr);
+    List<PublisherDto.Default> getAll();
+    List<PublisherDto.Default> getAllByPage(PageRequest pr);
 }

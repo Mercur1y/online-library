@@ -1,19 +1,18 @@
 package onlinelibrary.books.service;
 
 import onlinelibrary.books.domain.Genre;
-import org.springframework.data.domain.Page;
+import onlinelibrary.books.dto.GenreDto;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
-import java.util.Set;
 
 public interface GenreService {
 
-    Genre create(Genre genre);
+    void create(GenreDto.TitleOnly genre);
     Genre get(long id) throws Exception;
-    Genre update(Genre genre);
+    void update(GenreDto.TitleOnly genre, Long id);
     void delete(long id);
-    List<Genre> getAll();
-    Set<Genre> getAllById(List<Long> ids);
-    Page<Genre> getAllByPage(PageRequest pr);
+    List<GenreDto.Default> getAll();
+//    Set<Genre> getAllById(List<Long> ids);
+    List<GenreDto.Default> getAllByPage(PageRequest pr);
 }

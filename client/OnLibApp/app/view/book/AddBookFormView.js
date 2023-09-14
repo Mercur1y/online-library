@@ -5,6 +5,15 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
     autoShow: true,
     layout: 'fit',
     modal: true,
+    viewModel: 'bookviewmodel',
+
+    initComponent: function () {
+        var model = Ext.create('OnLibApp.model.BookModel');
+        var vm = this.getViewModel();
+        vm.set('book', model);
+        vm.set('geners', []);
+        this.callParent(arguments);
+    },
     items: [
         {
             bodyPadding: 10,
@@ -15,6 +24,7 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
                 width: 500,
                 id: 'addNameField',
                 fieldLabel: 'Название',
+                bind: '{book.name}',
                 allowBlank: false,
                 blankText: 'Это поле должно быть заполнено',
                 listeners: {change: 'onValidation'}
@@ -23,6 +33,7 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
                 name: 'description',
                 width: 500,
                 fieldLabel: 'Описание',
+                bind: '{book.description}',
                 blankText: 'Это поле должно быть заполнено',
                 allowBlank: false
             }, {
@@ -31,6 +42,7 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
                 width: 500,
                 id: 'addPriceField',
                 fieldLabel: 'Цена',
+                bind: '{book.price}',
                 regex: /^-?[0-9]+([.,][0-9]+)?$/,
                 regexText: 'Цена должна состоять из цифр',
                 allowBlank: false,
@@ -42,7 +54,10 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
                 id: 'genreIds',
                 width: 500,
                 queryMode: 'local',
-                bind: {store: {type: 'genre'}},
+                bind: {
+                    store: {type: 'genre'},
+                    value: '{genres}'
+                },
                 valueField: 'id',
                 displayField: 'title',
                 renderTo: Ext.getBody(),
@@ -65,7 +80,10 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
                     valueField: 'id',
                     selectOnFocus: true,
                     triggerAction: 'all',
-                    bind: {store: {type: 'author'}}
+                    bind: {
+                        store: {type: 'author'},
+                        selection: '{book.author}'
+                    }
                 }, {
                     xtype: 'button',
                     iconCls: 'x-fa fa-solid fa-plus',
@@ -99,13 +117,13 @@ Ext.define('OnLibApp.view.book.AddBookFormView', {
                         Ext.widget('addPublisherFormView');
                     }
                 }]
-            },{
+            }, {
                 name: 'publishYear',
                 width: 500,
                 format: 'Y',
                 fieldLabel: 'Год выпуска издания: ',
                 xtype: 'onlyyearpicker'
-            },{
+            }, {
                 layout: 'column',
                 items: [{
                     xtype: 'filefield',

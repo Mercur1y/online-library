@@ -13,20 +13,25 @@ Ext.define('OnLibApp.store.BookStore', {
             type: 'rest',
             reader:
                 {
-                    rootProperty: 'data',
+                    rootProperty: 'content',
+                    totalProperty: 'totalElements',
                     type: 'json'
                 },
-            url: '/api/v1/book',
             api: {
-                create: '/api/v1/book/create',
+                create: '/api/v1/book',
                 read: '/api/v1/book',
-                update: '/api/v1/book/edit',
-                destroy: '/api/v1/book/delete'
+                update: '/api/v1/book',
+                destroy: '/api/v1/book'
             },
             writer: {
                 type: 'json',
                 dateFormat: 'd/m/Y',
-                writeAllFields: true
+                writeAllFields: true,
+                writeRecordId: false,
+                allDataOptions: {
+                    associated: true,
+                    persist: true
+                }
             }
         }
 });

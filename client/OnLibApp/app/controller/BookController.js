@@ -8,7 +8,12 @@ Ext.define('OnLibApp.controller.BookController', {
 
     onSaveBook: function (button) {
         var me = this;
-        var bookModel = Ext.create('OnLibApp.model.BookModel');
+        var vm = this.getViewModel();
+        var bookModel = vm.get('book');
+        var genreStore = Ext.StoreManager.get('genrestoreid');
+        vm.get('genres').forEach(function (id) {
+            bookModel.genres().add(genreStore.getById(id));
+        })
         var uuid = this.uuidv4();
         bookModel.set(this.getView().down('form').getValues());
         bookModel.set('suuid', uuid);

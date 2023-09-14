@@ -2,8 +2,10 @@ package onlinelibrary.books.service.Impl;
 
 import lombok.RequiredArgsConstructor;
 import onlinelibrary.books.domain.Genre;
+import onlinelibrary.books.dto.GenreDto;
 import onlinelibrary.books.repo.GenreRepository;
 import onlinelibrary.books.service.GenreService;
+import onlinelibrary.common.service.MapperService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -17,10 +19,11 @@ import java.util.Set;
 public class GenreServiceImpl implements GenreService {
 
     private final GenreRepository repository;
+    private final MapperService mapperService;
 
     @Override
-    public Genre create(Genre genre) {
-        return repository.save(genre);
+    public void create(GenreDto.TitleOnly genreDto) {
+        repository.save(mapperService.map(genreDto, Genre.class));
     }
 
     @Override
@@ -30,10 +33,10 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public Genre update(Genre genre) {
-        Genre genreToUp = get(genre.getId());
-        genreToUp.setTitle(genre.getTitle());
-        return repository.save(genreToUp);
+    public void update(GenreDto.TitleOnly genreDto, Long id) {
+        Genre genreToUp = get(id);
+        genreToUp.setTitle(genreDto.getTitle());
+        repository.save(genreToUp);
     }
 
     @Override
@@ -42,18 +45,13 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<Genre> getAll() {
-        return repository.findAll();
+    public List<GenreDto.Default> getAll() {
+        return mapperService.mapList(repository.findAll(), GenreDto.Default.class);
     }
 
     @Override
-    public Set<Genre> getAllById(List<Long> ids) {
-        return repository.findAllById(ids);
-    }
-
-    @Override
-    public Page<Genre> getAllByPage(PageRequest pr) {
-        return repository.findAll(pr);
+    public List<GenreDto.Default> getAllByPage(PageRequest pr) {
+        return mapperService.mapList(repository.findAll(pr).getContent(), GenreDto.Default.class);
     }
 
 }

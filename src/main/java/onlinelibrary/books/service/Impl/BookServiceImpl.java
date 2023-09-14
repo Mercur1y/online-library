@@ -3,18 +3,15 @@ package onlinelibrary.books.service.Impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import onlinelibrary.books.domain.Book;
-import onlinelibrary.books.repo.AuthorRepository;
+import onlinelibrary.books.dto.BookDto;
 import onlinelibrary.books.repo.BookRepository;
 import onlinelibrary.books.service.BookService;
-import onlinelibrary.books.service.GenreService;
-import org.springframework.data.domain.Page;
+import onlinelibrary.common.service.MapperService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -22,15 +19,11 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository repository;
-    private final AuthorRepository authorRepository;
-    private final GenreService genreService;
+    private final MapperService mapperService;
 
     @Override
-    public Book create(Book book, List<Integer> ids, Long authorId) {
-        List<Long> idsLong = ids.stream().map(Integer::longValue).collect(Collectors.toList());
-        book.setGenres(genreService.getAllById(idsLong));
-        book.setAuthor(authorRepository.findById(authorId).get());
-        return repository.save(book);
+    public void create(BookDto.Request.ToCreate bookDto) {
+        repository.save(mapperService.map(bookDto, Book.class));
     }
 
     @Override
@@ -40,12 +33,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book update(Book book) {
-        Book bookToUpdate = get(book.getId());
-        bookToUpdate.setDescription(book.getDescription());
-        bookToUpdate.setGenres(book.getGenres());
-        bookToUpdate.setPrice(book.getPrice());
-        return repository.save(bookToUpdate);
+    public void update(BookDto.Request.ToEdit bookDto, Long id) {
+        Book bookToUpdate = get(id);
+        bookToUpdate.setDescription(bookDto.getDescription());
+        bookToUpdate.setPrice(bookDto.getPrice());
+        repository.save(bookToUpdate);
     }
 
     @Override
@@ -54,12 +46,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Mono<List<Book>> getAll() {
-        return Mono.just(repository.findAll());
+    public List<BookDto.Response.ForBookGrid> getAll() {
+        return mapperService.mapList(repository.findAll(), BookDto.Response.ForBookGrid.class);
     }
 
     @Override
-    public Page<Book> getAllByPage(PageRequest pr) {
-        return repository.findAll(pr);
+    public List<BookDto.Response.ForBookGrid> getAllByPage(PageRequest pr) {
+        return mapperService.mapList(repository.findAll(pr).getContent(), BookDto.Response.ForBookGrid.class);
     }
 }

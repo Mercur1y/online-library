@@ -1,6 +1,6 @@
 package onlinelibrary.books.domain;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,11 +17,6 @@ public class Author {
     private String fio;
     @Column(length = 511)
     private String description;
-
-
-    @JsonIgnoreProperties(value = {"author"}, allowSetters = true)
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<Book> books;
 
     @Override
     public String toString() {return fio;}

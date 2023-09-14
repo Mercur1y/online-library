@@ -2,8 +2,10 @@ package onlinelibrary.books.service.Impl;
 
 import lombok.RequiredArgsConstructor;
 import onlinelibrary.books.domain.Publisher;
+import onlinelibrary.books.dto.PublisherDto;
 import onlinelibrary.books.repo.PublisherRepository;
 import onlinelibrary.books.service.PublisherService;
+import onlinelibrary.common.service.MapperService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,11 @@ import java.util.Optional;
 public class PublihserServiceImpl implements PublisherService {
 
     private final PublisherRepository repository;
+    private final MapperService mapperService;
 
     @Override
-    public Publisher create(Publisher publisher) {
-        return repository.save(publisher);
+    public void create(PublisherDto.NameOnly publisherDto) {
+        repository.save(mapperService.map(publisherDto, Publisher.class));
     }
 
     @Override
@@ -29,10 +32,10 @@ public class PublihserServiceImpl implements PublisherService {
     }
 
     @Override
-    public Publisher update(Publisher publisher) {
-        Publisher publisherToUp = get(publisher.getId());
-        publisherToUp.setName(publisher.getName());
-        return repository.save(publisherToUp);
+    public void update(PublisherDto.NameOnly publisherDto, Long id) {
+        Publisher publisherToUp = get(id);
+        publisherToUp.setName(publisherDto.getName());
+        repository.save(publisherToUp);
     }
 
     @Override
@@ -41,12 +44,12 @@ public class PublihserServiceImpl implements PublisherService {
     }
 
     @Override
-    public List<Publisher> getAll() {
-        return repository.findAll();
+    public List<PublisherDto.Default> getAll() {
+        return mapperService.mapList(repository.findAll(), PublisherDto.Default.class);
     }
 
     @Override
-    public Page<Publisher> getAllByPage(PageRequest pr) {
-        return repository.findAll(pr);
+    public List<PublisherDto.Default> getAllByPage(PageRequest pr) {
+        return mapperService.mapList(repository.findAll(pr).getContent(), PublisherDto.Default.class);
     }
 }
